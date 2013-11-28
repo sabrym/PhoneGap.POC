@@ -124,6 +124,7 @@
             }
             
              var current = new Current(FB);
+             current.subscribeForFBEvents();
             document.addEventListener('deviceready', function() {
               // this works upto this point
               // try passing the FB variable into the constructor 

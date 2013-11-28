@@ -1,40 +1,37 @@
     var Current = (function (Context) {
-        var friendIDs;	
+        
+        function Current (FB) {
+            this.applicationId = "625372577501704"; 
+            if (FB == undefined) 
+            {
+                alert("I have been undefined");
+            }
+            else
+            {
+                this.fb = FB;
 
-      function Current (FB) {
-        this.friendIDs = [];
-
-        if (FB == undefined) 
-        {
-            alert("I have been undefined");
+            }
         }
-        else
-        {
-            this.fb = FB;
-             // body...
-             FB.Event.subscribe('auth.login', function(response) {
-                 alert('auth.login event');
-             });
 
-             FB.Event.subscribe('auth.logout', function(response) {
-                 alert('auth.logout event');
-             });
+        Current.prototype.subscribeForFBEvents = function() {
+            this.fb.Event.subscribe('auth.login', function(response) {
+             alert('auth.login event');
+         });
 
-             FB.Event.subscribe('auth.sessionChange', function(response) {
-                 alert('auth.sessionChange event');
-             });
+            this.fb.Event.subscribe('auth.logout', function(response) {
+             alert('auth.logout event');
+         });
 
-             FB.Event.subscribe('auth.statusChange', function(response) {
-                 alert('auth.statusChange event');
-             });
+            this.fb.Event.subscribe('auth.sessionChange', function(response) {
+             alert('auth.sessionChange event');
+         });
 
-             this.applicationId = "625372577501704";        
-         }
+            this.fb.Event.subscribe('auth.statusChange', function(response) {
+             alert('auth.statusChange event');
+         });
+        };
 
-
-     }
-
-     Current.prototype.initFb = function() {
+        Current.prototype.initFb = function() {
         	// alert("Initializing initFb");
          //    alert("I am printing out the applicationId " + this.applicationId);
          if (this.fb !== undefined) 
