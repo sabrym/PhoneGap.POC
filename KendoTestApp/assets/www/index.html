@@ -38,10 +38,10 @@
     <script src="js/facebook-js-sdk.js"></script>
     <script type="text/javascript" src="js/current.js"></script>
     <script type="text/javascript">
-    var current;
+ 
          
     function onBodyLoad()
-    {   window.current = new Current(FB)
+    {   window.current = new Current(FB);
         window.current.subscribeForFBEvents();             
         document.addEventListener("deviceready", onDeviceReady, false);
     }
@@ -58,10 +58,10 @@
         <img src="img/connect.png" class="application-logo" /><br />
         <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
         <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
-          <ul data-role="listview" data-style="inset">
+         <!--  <ul data-role="listview" data-style="inset">
             <li><label for="username">Username: <input type="text" id="username" data-bind="value: userName"/></label></li>
             <li><label for="password">Password: <input type="password" id="password" data-bind="value: password"/></label></li>
-        </ul>
+        </ul> -->
     </div>
 
     <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Local View" data-model="localViewModel">
@@ -90,7 +90,7 @@
     data-model="selectedModel">   
     <div>Selected View</div>
     <div><a data-role="button" data-bind="click: navigateToMain">Go to Main view</a></div>
-</div>
+    </div>
 
 <style scoped>
 #modalview-login-button,
@@ -170,26 +170,25 @@ if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that yo
 if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
 var landingModel = kendo.observable({
-    userName: "Bamboo",
-    password: "1",
     navigateToSelected: function (e) {
         var param = $(e.target).data('parameter');
-        alert(param);
+        //alert(param);
         if (param === "login") 
         {                  
-             var loginUser = window.current.loginUser();
-             if (loginUser) 
-                {
-                    window.kendoMobileApplication("#secondview");
+             window.current.loginUser();
+             // if (current.getLoginStatus()) 
+             //    {
+             //        window.kendoMobileApplication("#secondview");
 
-                }
-                else
-                {
-                    alert('Facebook login Failed');
-                }
+             //    }
+             //    else
+             //    {
+             //        alert('Facebook login Failed');
+             //    }
         }
         else if (param === "help") 
         {
+            alert("Login Status : " + current.getLoginStatus());
             alert("This is an alert o mimick the help functionality");
         }
 
@@ -197,13 +196,15 @@ var landingModel = kendo.observable({
 });
 
 function closeModalViewLogin() {
-    $("#modalview-login").kendoMobileModalView("close");
+    //$("#modalview-login").kendoMobileModalView("close");
+    alert("Heehaw");
 }
 </script>
 
 
 <script>
 window.kendoMobileApplication = new kendo.mobile.Application(document.body);
+window.kendoMobileApplication("#modalview-camera");
 </script>
 </body>
 </html>
