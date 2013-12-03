@@ -1,6 +1,0 @@
-var Constants = (function (Context) { 
-
-Constants.FACEBOOK_LOGIN_SUCCESSFUL = "";
-Constants.FACEBOOK_LOGIN_FAILED = "";
-
-});

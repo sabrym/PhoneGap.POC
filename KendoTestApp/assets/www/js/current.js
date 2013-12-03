@@ -37,6 +37,7 @@
 
         this.fb.Event.subscribe('auth.statusChange', function(response) {
           currentClass.loginStatus = response.status;
+          alert("Status Change!");
         });
       };
 
@@ -54,19 +55,26 @@
        }
      }
 
-     Current.prototype.loginUser = function(callback) {
-
+     Current.prototype.loginUser = function(callback, callback1, callback2) {
+      var currentObject = this;
+      callback1();
       this.fb.login(
        function(response) {
-        callback();
-       //alert('Facebook login status' + response.status);
-     }
-     ,
-     { scope: "email" }
-     );
+        console.log("This is the authentication token " + response.authResponse.accessToken);
+            var accessToken = response.authResponse.accessToken
+        var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"
+ 
+        // Place <input id="name" /> and <input id="fbuid" /> into HTML
+        callback2(tokenUrl);
+         callback();
+        
+      }
+      ,
+      { scope: "email" }
+      );
     };
 
-    Current.prototype.getMyFriends = function(numberOfFriends) {
+    Current.prototype.getMyFriends = function(callback) {
      var friendIDs = [];
      var counter = 0;
      var fdata;
@@ -74,19 +82,21 @@
        if (response.error) {
          alert(JSON.stringify(response.error));
        } else {
+        alert(JSON.stringify(response.data));
          var data = document.getElementById('data');
-         fdata=response.data;
-         console.log("fdata: "+fdata);
-         response.data.forEach(function(item) {
-           var d = document.createElement('div');
-                    // alert("User url :" + item.picture.data.url);
-                    d.innerHTML = "<img src='"+item.picture.data.url+"'/>"+item.name;
-                    data.appendChild(d);
+         callback();
+          // https://graph.facebook.com/me/friends?access_token=
+         // fdata=response.data;
+         // console.log("fdata: "+fdata);
+         // response.data.forEach(function(item) {
+         //   var d = document.createElement('div');
+         //   d.innerHTML = "<img src='"+item.picture.data.url+"'/>"+item.name;
+         //   data.appendChild(d);
 
-                    friendIDs.push(item.name);
-                    console.log("The intermediate array :" + friendIDs);
-                    counter++;
-                  });
+         //   friendIDs.push(item.name);
+         //   console.log("The intermediate array :" + friendIDs);
+         //   counter++;
+         // });
        }
      });
 
