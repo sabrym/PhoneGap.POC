@@ -58,10 +58,6 @@
         <img src="img/connect.png" class="application-logo" /><br />
         <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
         <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
-         <!--  <ul data-role="listview" data-style="inset">
-            <li><label for="username">Username: <input type="text" id="username" data-bind="value: userName"/></label></li>
-            <li><label for="password">Password: <input type="password" id="password" data-bind="value: password"/></label></li>
-        </ul> -->
     </div>
 
     <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Local View" data-model="localViewModel">
@@ -172,19 +168,9 @@ if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you 
 var landingModel = kendo.observable({
     navigateToSelected: function (e) {
         var param = $(e.target).data('parameter');
-        //alert(param);
         if (param === "login") 
-        {                  
-             window.current.loginUser();
-             // if (current.getLoginStatus()) 
-             //    {
-             //        window.kendoMobileApplication("#secondview");
-
-             //    }
-             //    else
-             //    {
-             //        alert('Facebook login Failed');
-             //    }
+        {                          
+             window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#secondview");});
         }
         else if (param === "help") 
         {
@@ -204,7 +190,7 @@ function closeModalViewLogin() {
 
 <script>
 window.kendoMobileApplication = new kendo.mobile.Application(document.body);
-window.kendoMobileApplication("#modalview-camera");
+window.kendoMobileApplication.navigate("#modalview-camera");
 </script>
 </body>
 </html>

@@ -54,19 +54,12 @@
        }
      }
 
-     Current.prototype.loginUser = function() {
+     Current.prototype.loginUser = function(callback) {
+
       this.fb.login(
        function(response) {
-       //  if (response.authResponse) {
-       //   console.log('Welcome!  Fetching your information.... ');
-       //   FB.api('/me', function(response) {
-       //     console.log('Good to see you, ' + response.name + '.');
-       //   });
-       // } else {
-       //   console.log('User cancelled login or did not fully authorize.');
-       // }  
-
-       alert('Facebook login Failed' + response.status);
+        callback();
+       //alert('Facebook login status' + response.status);
      }
      ,
      { scope: "email" }
