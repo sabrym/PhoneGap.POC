@@ -74,20 +74,10 @@
 
     <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Local View" data-model="localViewModel">
         <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-            <p>This the subsequent view where the user would be able to see pending meetups</p>
-              <ul id="flat-listview"></ul>
-           
+            <p>This the subsequent view where the user would be able to see pending meetups.. need to add a spinner here!!</p>
+            <ul id="flat-listview" data-role="listview" data-template="tmp"></ul>
         </div>
-        <a data-role="button"  id="modalview-back-button" data-bind="click: navigateToSelected" data-parameter="back">Go Back</a>
     </div>
-
-<script type="text/x-kendo-tmpl" id="flat-listview">
-    <div class="product">
-        // <img src="../../content/web/foods/#=ProductID#.jpg" alt="#=ProductName# image" class="pullImage"/>
-        <h3>#:name#</h3>
-        // <p>#:kendo.toString(UnitPrice, "c")#</p>
-    </div>
-</script>
     <div data-role="view" id="modalview-login" style="width: 90%;" data-model="loginModel">
         <div data-role="header">
             <div data-role="navbar">
@@ -109,14 +99,9 @@
     <div>Selected View</div>
     <div><a data-role="button" data-bind="click: navigateToMain">Go to Main view</a></div>
     </div>
-    <div id="foo" data-role="view">
-      <a data-click="closeModalViewLogin" data-role="button" data-align="right">get friends</a>
-    <ul id="list" data-role="listview" data-source="dataSource" data-template="tmp"></ul>
-     <input id="example" />
-</div>
-
+   
 <script id="tmp" type="text/x-kendo-template">
-    <p>#: name # <span>Age: #: age #</span></p>
+    <p>#: name #</p>
 </script>
 
 <style scoped>
@@ -195,12 +180,7 @@
 if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
 if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
 if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-  var dataSource = new kendo.data.DataSource({
-        data: [
-            { name: "Jane Doe", age: 30 },
-            { name: "John Doe", age: 33 }
-        ]
-    });
+
 var landingModel = kendo.observable({
     navigateToSelected: function (e) {
         var param = $(e.target).data('parameter');
@@ -218,7 +198,9 @@ var landingModel = kendo.observable({
 });
     
 function closeModalViewLogin(tokenUrl) {
-     $("#flat-listview").kendoMobileListView({ dataSource: {
+     $("#flat-listview").kendoMobileListView(
+        { 
+            dataSource: {
         transport: {
           read: {
             dataType: "jsonp",
@@ -226,10 +208,13 @@ function closeModalViewLogin(tokenUrl) {
           }
         },
          schema: {
-              data: "data"
-            }
-      }
-      });
+                data: "data"
+            },
+            pageSize: 10
+      },
+      template: $("#tmp").html(),
+      loadmore: true
+            });
    //  alert("The token url" + tokenUrl);
    // // add the kendo ui multiselect here:
    //  $("#example").kendoMultiSelect({
