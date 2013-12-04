@@ -40,6 +40,7 @@
 
     <!-- facebook js sdk -->
     <script src="js/facebook-js-sdk.js"></script>
+    <script type="text/javascript" src="js/ApplicationUser.js"></script>
     <script type="text/javascript" src="js/current.js"></script>
     <script type="text/javascript">
  
@@ -58,7 +59,8 @@
     }
 
     function onBackButtonPressed () {
-        // body...
+        // TODO: Implement back button handling based on the current navigation 
+        // location        
         alert("Back Button Pressed!");
     }
 
@@ -66,19 +68,19 @@
     <title>Kendo Mobile Tryout - 99x</title>
 </head>
 <body onload="onBodyLoad()"> 
-    <div data-role="view" id="modalview-camera" data-title="HTML5 Camera" data-model="landingModel">
+    <div data-role="view" id="modalview-camera" data-title="Application Landing View" data-model="landingModel">
         <img src="img/connect.png" class="application-logo" /><br />
         <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
         <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
     </div>
 
-    <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Local View" data-model="localViewModel">
+    <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Friends View" data-model="localViewModel">
         <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
             <p>This the subsequent view where the user would be able to see pending meetups.. need to add a spinner here!!</p>
             <ul id="flat-listview" data-role="listview" data-template="tmp"></ul>
         </div>
     </div>
-    <div data-role="view" id="modalview-login" style="width: 90%;" data-model="loginModel">
+    <!-- <div data-role="view" id="modalview-login" style="width: 90%;" data-model="loginModel">
         <div data-role="header">
             <div data-role="navbar">
                 <span>Login</span>
@@ -92,7 +94,7 @@
         </ul>
         <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button">Login</a>
         <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button">Register</a>
-    </div>
+    </div> -->
 
     <div id="SelectedView" data-title="View Group" data-role="view" 
     data-model="selectedModel">   
@@ -131,10 +133,10 @@
     margin: 30px auto;
 }
 
-#modalview-camera .km-content,
+/*#modalview-camera .km-content,
 .km-ios #modalview-login .km-content {
     background: url(../../content/shared/images/patterns/pattern1.png) repeat 0 0;
-}
+}*/
 
 #modalview-login label {
     display: inline-block;
@@ -191,13 +193,13 @@ var landingModel = kendo.observable({
         else if (param === "help") 
         {
             alert("Login Status : " + current.getLoginStatus());
-            alert("This is an alert o mimick the help functionality");
         }
 
     }
 });
     
 function closeModalViewLogin(tokenUrl) {
+    //TODO: Remove the hardcoded token url and pass the url generated from the login
      $("#flat-listview").kendoMobileListView(
         { 
             dataSource: {
@@ -212,26 +214,8 @@ function closeModalViewLogin(tokenUrl) {
             },
             pageSize: 10
       },
-      template: $("#tmp").html(),
-      loadmore: true
+      template: $("#tmp").html()
             });
-   //  alert("The token url" + tokenUrl);
-   // // add the kendo ui multiselect here:
-   //  $("#example").kendoMultiSelect({
-   //    dataTextField: "name",
-   //    dataValueField: "id",
-   //    dataSource: {
-   //      transport: {
-   //        read: {
-   //          dataType: "jsonp",
-   //          url: "https://graph.facebook.com/me/friends?access_token=CAAI4xeZAVkggBAFVmEWTcd2UD6871qBeXjoWr4CiaY4NUlT9nwDsnHmSH6H9ENZBw2BwdIFxI95oOsfyz3gEdZB80KyCxXZAleA7UZBu9ybZAl2P2NsGVXG5EDy8XY4RrLRN838K947gDEsDhjW4Mmm0GGSrALOeqGZAooGAZBBoHjyAmvCXDzWnPjcyMpZAJhGgZD&callback=?"
-   //        }
-   //      },
-   //       schema: {
-   //            data: "data"
-   //          }
-   //    }
-   //  });
 }
 </script>
 
