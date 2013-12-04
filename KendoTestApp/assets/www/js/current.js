@@ -3,6 +3,7 @@
       var applicationUser;
       
       function Current (FB) {
+        
         this.applicationUser = new ApplicationUser();
         this.applicationId = "625372577501704"; 
         if (FB == undefined) 
