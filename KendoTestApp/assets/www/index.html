@@ -21,7 +21,8 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
         <meta charset="utf-8">
-
+         <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />   
+        <link rel="stylesheet" href="css/kendo.default.min.css" type="text/css" />   
         <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" />   
         <style>
         [href*=index], #back-button
@@ -45,8 +46,8 @@
         <script type="text/javascript" src="js/ApplicationUser.js"></script>
         <script type="text/javascript" src="js/current.js"></script>
         <script type="text/javascript">
-     
-             
+
+
         function onBodyLoad()
         {   window.current = new Current(FB);
             window.current.subscribeForFBEvents();             
@@ -70,58 +71,229 @@
         <title>Kendo Mobile Tryout - 99x</title>
     </head>
     <body onload="onBodyLoad()"> 
-        <div data-role="view" id="loginView" data-title="Application Landing View" data-model="landingModel">         
+
+        <!-- Application Views -->
+        <div data-role="view" id="loginView" class="km-insetcontent" data-title="Application Landing View" data-model="landingModel" data-init="viewInit" data-hide="viewHide">         
             <img src="img/connect.png" class="application-logo" /><br />
             <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
             <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
+            <button id="show" data-role="button">Show Loading Popup</button>
+        </div>
+<!-- 
+        <div id="loading" data-role="view" class="km-insetcontent" data-init="viewInit" data-hide="viewHide" data-title="Loading Popup">
+            <button id="show" data-role="button">Show Loading Popup</button>
+        </div> -->
+
+       
+         <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
+                <form action="./index.html">
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>Select element
+                    <select>
+                        <option value="First Option">First Option</option>
+                        <option value="Second Option">Second Option</option>
+                        <option value="Third Option">Third Option</option>
+                        <option value="Fourth Option">Fourth Option</option>
+                    </select>
+                </label>
+            </li>
+            <li>
+                <label>DropDownList
+                    <select id="dropdown">
+                        <option value="First Option">First Option</option>
+                        <option value="Second Option">Second Option</option>
+                        <option value="Third Option">Third Option</option>
+                        <option value="Fourth Option">Fourth Option</option>
+                        <option value="First Option">Fifth Option</option>
+                        <option value="Sixth Option">Sixth Option</option>
+                    </select>
+                </label>
+            </li>
+            <li>
+                <label>Slider
+                    <input id="slider" type="range" max="100" />
+                </label>
+            </li>
+            <li>
+                <label>Type text
+                    <input type="text" value="Text" />
+                </label>
+            </li>
+            <li>
+                <label>
+                Type password
+                <input type="password" value="password" />
+                </label>
+            </li>
+            <li>
+                <label>
+                Type search
+                <input type="search" value="search" />
+                </label>
+            </li>
+            <li>
+                <label>
+                Type url
+                <input type="url" value="http://www.kendoui.com" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type email
+                    <input type="email" value="kendoui@kendoui.com" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type number
+                    <input type="number" value="20" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type tel
+                    <input type="tel" value="+44 22 11 10" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type date
+                    <input type="date" value="2012-03-22" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type time
+                    <input type="time" value="22:30" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type month
+                    <input type="month" value="2012-01" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Type datetime-local
+                    <input type="datetime-local" value="2012-03-22T20:15" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Textarea
+                    <textarea style="resize: none">Multiline
+Text</textarea>
+                </label>
+            </li>
+        </ul>
+    </form>
         </div>
 
-       <div data-role="view" id="meetupView" data-title="Add Meetup View" data-model="meetupModel"> 
-            
-        </div>
-
-        <div data-role="view" id="secondview" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
+        <div data-role="view" id="friendsView" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
             <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-                <ul id="flat-listview" data-role="listview" data-template="tmp"></ul>
+                <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
             </div>
         </div>
         
-        <div id="SelectedView" data-title="View Group" data-role="view" 
-        data-model="selectedModel">   
-        <div>Selected View</div>
-        <div><a data-role="button" data-bind="click: navigateToMain">Go to Main view</a></div>
-        </div>
-
         <div data-role="layout" data-id="layout" data-platform="android">
-        <footer data-role="footer">
-         <div>
-            <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
-        </div>
+            <footer data-role="footer">
+             <div>
+                <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
+            </div>
         </footer>
     </div>
-       
-    <script id="tmp" type="text/x-kendo-template">
-        <p>#: name #</p>
+    <!-- Application Views End -->
+
+    <script id="friendsTemplate" type="text/x-kendo-template">
+    <p>#: name #</p>
     </script>
 
     <style scoped>
-       .buttonAppearance .km-button:not(.km-back)
-            {
-                width: 90%;
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;
-            }
-     #layoutView .km-view-title
-        {
-            visibility: inherit;
-        }
+    #forms input:not([type=checkbox]):not([type=radio]),
+    #forms select,
+    #forms .k-dropdown
+    {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 50%;
+    }
+    #forms label {
+        display: inline-block;
+        width: 100%;
+    }
+     .km-ios #loading .km-content
+    {
+        background: transparent;
+    }
 
-        .km-android #layoutView .km-view-title
-        {
-            display: block;
-            position: static;
-        }
+    #loading .km-content
+    {
+        text-align: center;
+    }
+
+    #show
+    {
+        margin-top: 100px;
+        font-size: 1.2em;
+    }
+
+    /* Example Counter */
+    .km-meego h1.loaderHeading,
+    .km-android h1.loaderHeading,
+    .km-blackberry h1.loaderHeading
+    {
+        display: block;
+        position: absolute;
+        overflow: hidden;
+        width: 1em;
+        left: 50%;
+        height: 1em;
+        top: 50%;
+        font-size: 1.2rem;
+        margin: -.65em 0 0 -.5em;
+    }
+
+    .km-android h1.loaderHeading
+    {
+        margin: -.55em 0 0 -.5em;
+    }
+
+    .km-flat h1.loaderHeading,
+    .km-wp h1.loaderHeading
+    {
+        display: block;
+    }
+
+    .km-ios h1.loaderHeading
+    {
+        font-size: 1rem;
+    }
+    .km-meego h1.loaderHeading,
+    .km-blackberry h1.loaderHeading
+    {
+        font-size: 1.5rem;
+    }
+
+
+    .buttonAppearance .km-button:not(.km-back)
+    {
+        width: 90%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+    #layoutView .km-view-title
+    {
+        visibility: inherit;
+    }
+
+    .km-android #layoutView .km-view-title
+    {
+        display: block;
+        position: static;
+    }
     #modalview-login-button,
     #modalview-reg-button,
     #modalview-open-button {
@@ -151,108 +323,168 @@
     /*#loginView .km-content,
     .km-ios #modalview-login .km-content {
         background: url(../../content/shared/images/patterns/pattern1.png) repeat 0 0;
-    }*/
+        }*/
 
-    #modalview-login label {
-        display: inline-block;
-        width: 100%;
-    }
-    .km-ios #loginView .km-button,
-    .km-ios #modalview-login .km-button,
-    .km-ios #loginView .km-navbar,
-    .km-ios #modalview-login .km-header,
-    .km-blackberry #loginView .km-navbar,
-    .km-blackberry #modalview-login .km-navbar
-    {
-        background-color: #000;
-    }
-
-    .km-blackberry #loginView .km-button
-    {
-        color: #fff;
-    }
-
-    .km-ios #loginView .km-button:active,
-    .km-ios #loginView .km-state-active,
-    .km-ios #modalview-login .km-button:active,
-    .km-ios #modalview-login .km-state-active {
-        background-color: #2e2e2e;
-    }
-
-    .km-ios #modalview-login #modalview-login-button,
-    .km-flat #modalview-login #modalview-login-button {
-        background-color: Green;
-        color: #fff;
-    }
-
-    .km-tablet .km-ios #loginView .km-view-title,
-    .km-tablet .km-ios #modalview-login .km-view-title {
-        color: #fff;
-        text-shadow: 0 -1px rgba(0,0,0,.5);
-    }
-
-    </style>
-    <script>
-    <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-    if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-    if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-    if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-
-    // var footerModel = kendo.observable({
-    //     addNewMeetup: function (e) {
-          
-    //         var param = $(e.target).data('parameter');
-    //         if (param === "addMeetup") 
-    //         {
-    //             alert("Login Status : " + current.getLoginStatus());
-    //         }
-
-    //     }
-    // });
-
-    var meetupModel = kendo.observable({
-        loadFriends: function () {
-       
+        #modalview-login label {
+            display: inline-block;
+            width: 100%;
+        }
+        .km-ios #loginView .km-button,
+        .km-ios #modalview-login .km-button,
+        .km-ios #loginView .km-navbar,
+        .km-ios #modalview-login .km-header,
+        .km-blackberry #loginView .km-navbar,
+        .km-blackberry #modalview-login .km-navbar
+        {
+            background-color: #000;
         }
 
-    });
+        .km-blackberry #loginView .km-button
+        {
+            color: #fff;
+        }
 
-    var landingModel = kendo.observable({
-        navigateToSelected: function (e) {
-            var param = $(e.target).data('parameter');
-            if (param === "login") 
-            {                          
-                 window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#secondview");}, function() { window.kendoMobileApplication.showLoading(); }, closeModalViewLogin);
+        .km-ios #loginView .km-button:active,
+        .km-ios #loginView .km-state-active,
+        .km-ios #modalview-login .km-button:active,
+        .km-ios #modalview-login .km-state-active {
+            background-color: #2e2e2e;
+        }
+
+        .km-ios #modalview-login #modalview-login-button,
+        .km-flat #modalview-login #modalview-login-button {
+            background-color: Green;
+            color: #fff;
+        }
+
+        .km-tablet .km-ios #loginView .km-view-title,
+        .km-tablet .km-ios #modalview-login .km-view-title {
+            color: #fff;
+            text-shadow: 0 -1px rgba(0,0,0,.5);
+        }
+
+        </style>
+        <script>
+        function initForm() {
+        var body = $(".km-pane");
+
+        if (kendo.ui.DropDownList) {
+            $("#dropdown").kendoDropDownList({
+                // The options are needed only for the desktop demo, remove them for mobile.
+                popup: { appendTo: body },
+                animation: { open: { effects: body.hasClass("km-android") ? "fadeIn" : body.hasClass("km-ios") || body.hasClass("km-wp") ? "slideIn:up" : "slideIn:down" } }
+            });
+        }
+
+        if (kendo.ui.Slider) {
+            $("#slider").kendoSlider({ tooltip: { enabled: false } });
+        }
+    }
+        <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+        if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+        if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+        if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+
+        var meetupModel = kendo.observable({
+            loadFriends: function () {
+
             }
-            else if (param === "help") 
-            {
+
+        });
+
+        var landingModel = kendo.observable({
+            navigateToSelected: function (e) {
+                var param = $(e.target).data('parameter');
+                if (param === "login") 
+                {                          
+                 window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#friendsView");}, function() { animate() }, closeModalViewLogin);
+             }
+             else if (param === "help") 
+             {
                 alert("Login Status : " + current.getLoginStatus());
             }
 
         }
     });
-        
-    function alertMe() {
+
+        function alertMe() {
         // body...
-          alert("Meetup! => transition to the meetup view here");
+        alert("Meetup! => transition to the meetup view here");
     }
+
     function closeModalViewLogin(tokenUrl) {
+        hideLoader();
         //TODO: Remove the hardcoded token url and pass the url generated from the login
-         $("#flat-listview").kendoMobileListView(
-            { 
-                dataSource: {
-            transport: {
-              read: {
-                dataType: "jsonp",
-                url: "https://graph.facebook.com/me/friends?access_token=CAAI4xeZAVkggBAFVmEWTcd2UD6871qBeXjoWr4CiaY4NUlT9nwDsnHmSH6H9ENZBw2BwdIFxI95oOsfyz3gEdZB80KyCxXZAleA7UZBu9ybZAl2P2NsGVXG5EDy8XY4RrLRN838K947gDEsDhjW4Mmm0GGSrALOeqGZAooGAZBBoHjyAmvCXDzWnPjcyMpZAJhGgZD&callback=?"
-              }
-            },
-             schema: {
-                    data: "data"
+        $("#flat-listview").kendoMobileListView(
+        { 
+            dataSource: {
+                transport: {
+                  read: {
+                    dataType: "jsonp",
+                    url: "https://graph.facebook.com/me/friends?access_token=CAAI4xeZAVkggBAFVmEWTcd2UD6871qBeXjoWr4CiaY4NUlT9nwDsnHmSH6H9ENZBw2BwdIFxI95oOsfyz3gEdZB80KyCxXZAleA7UZBu9ybZAl2P2NsGVXG5EDy8XY4RrLRN838K947gDEsDhjW4Mmm0GGSrALOeqGZAooGAZBBoHjyAmvCXDzWnPjcyMpZAJhGgZD&callback=?"
                 }
-          },
-          template: $("#tmp").html()
-                });
+            },
+            schema: {
+                data: "data"
+            },
+
+        },
+        selectable: "single",
+        template: $("#friendsTemplate").html()
+    });
+    }
+
+
+    // loading stuff
+
+    var showButton, interval, loaderElement;
+     //var currentDiv = $("#show");
+    function viewInit(e) {
+        showButton = $("#show").bind(kendo.support.mouseup, function() {
+
+                       
+                        currentDiv.animate({ opacity: 0 });
+                        startLoading();
+                     });
+
+        loaderElement = kendoMobileApplication.pane.loader.element.find("h1");
+    }
+
+    function animate () {
+        var currentDiv = $("#loginView");
+        currentDiv.animate({ opacity: 0 });
+        startLoading();
+    }
+
+    function hideLoader() {
+        clearInterval(interval);
+        kendoMobileApplication.hideLoading(); //hide loading popup
+        loaderElement.removeClass("loaderHeading").text("Loading...");
+    }
+
+    function viewHide(e) {
+         var currentDiv = $("#loginView");
+        currentDiv.animate({ opacity: 1 });
+        hideLoader();
+    }
+
+    function startLoading() {
+        var currentDiv = $("#loginView");
+        hideLoader();
+        var seconds = 5;
+
+        loaderElement.text(seconds + " seconds left!").addClass("loaderHeading");
+
+        kendoMobileApplication.showLoading(); //show loading popup
+
+        interval = setInterval(function() {
+            loaderElement.text(--seconds + " seconds left!"); //update text of the loading popup
+
+            if (seconds == 0) {
+                currentDiv.animate({ opacity: 1 });
+                hideLoader();
+            }
+        }, 1000);
     }
     </script>
 
@@ -260,8 +492,9 @@
     <script>
     window.kendoMobileApplication = new kendo.mobile.Application(document.body, {
         transition: "slide",
+        initial: "loginView"
     } );
-    window.kendoMobileApplication.navigate("#loginView");
+    //window.kendoMobileApplication.navigate("#loading");
 
     </script>
     </body>
