@@ -1,232 +1,268 @@
-<!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+    <!DOCTYPE html>
+    <!--
+        Licensed to the Apache Software Foundation (ASF) under one
+        or more contributor license agreements.  See the NOTICE file
+        distributed with this work for additional information
+        regarding copyright ownership.  The ASF licenses this file
+        to you under the Apache License, Version 2.0 (the
+        "License"); you may not use this file except in compliance
+        with the License.  You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-    <meta charset="utf-8">
+        Unless required by applicable law or agreed to in writing,
+        software distributed under the License is distributed on an
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+         KIND, either express or implied.  See the License for the
+        specific language governing permissions and limitations
+        under the License.
+    -->
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta charset="utf-8">
 
-    <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" />   
-    <style>
-    [href*=index], #back-button
-    {
-        visibility: hidden;
-    }
-    </style>  
-    <script type="text/javascript" src="cordova-2.6.0.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-ui-1.10.3.js"></script>
-    <script src="http://cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
-    <script src="js/kendo.mobile.min.js"></script>
+        <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" />   
+        <style>
+        [href*=index], #back-button
+        {
+            visibility: hidden;
+        }
+        </style>  
+        <script type="text/javascript" src="cordova-2.6.0.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui-1.10.3.js"></script>
 
-    <!-- cordova facebook plugin -->
-    <script src="js/cdv-plugin-fb-connect.js"></script>
+        <!-- TODO: change this to a local location -->
+        <script src="js/kendo.all.min.js"></script>
+        <script src="js/kendo.mobile.min.js"></script>
 
-    <!-- facebook js sdk -->
-    <script src="js/facebook-js-sdk.js"></script>
-    <script type="text/javascript" src="js/ApplicationUser.js"></script>
-    <script type="text/javascript" src="js/current.js"></script>
-    <script type="text/javascript">
- 
-         
-    function onBodyLoad()
-    {   window.current = new Current(FB);
-        window.current.subscribeForFBEvents();             
-        document.addEventListener("deviceready", onDeviceReady, false);        
-    }
+        <!-- cordova facebook plugin -->
+        <script src="js/cdv-plugin-fb-connect.js"></script>
 
-    function onDeviceReady()
-    {
-        alert("The device is ready");
-        document.addEventListener("backbutton", onBackButtonPressed, false);
-        window.current.initFb();
-    }
+        <!-- facebook js sdk -->
+        <script src="js/facebook-js-sdk.js"></script>
+        <script type="text/javascript" src="js/ApplicationUser.js"></script>
+        <script type="text/javascript" src="js/current.js"></script>
+        <script type="text/javascript">
+     
+             
+        function onBodyLoad()
+        {   window.current = new Current(FB);
+            window.current.subscribeForFBEvents();             
+            document.addEventListener("deviceready", onDeviceReady, false);        
+        }
 
-    function onBackButtonPressed () {
-        // TODO: Implement back button handling based on the current navigation 
-        // location        
-        alert("Back Button Pressed!");
-    }
+        function onDeviceReady()
+        {
+            alert("The device is ready");
+            document.addEventListener("backbutton", onBackButtonPressed, false);
+            window.current.initFb();
+        }
 
-    </script>
-    <title>Kendo Mobile Tryout - 99x</title>
-</head>
-<body onload="onBodyLoad()"> 
-    <div data-role="view" id="modalview-camera" data-title="Application Landing View" data-model="landingModel">
-        <img src="img/connect.png" class="application-logo" /><br />
-        <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
-        <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
-    </div>
+        function onBackButtonPressed () {
+            // TODO: Implement back button handling based on the current navigation 
+            // location        
+            alert("Back Button Pressed!");
+        }
 
-    <div data-role="view" id="secondview" data-layout="mobile-view" data-title="Friends View" data-model="localViewModel">
-        <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-            <p>This the subsequent view where the user would be able to see pending meetups.. need to add a spinner here!!</p>
-            <ul id="flat-listview" data-role="listview" data-template="tmp"></ul>
+        </script>
+        <title>Kendo Mobile Tryout - 99x</title>
+    </head>
+    <body onload="onBodyLoad()"> 
+        <div data-role="view" id="loginView" data-title="Application Landing View" data-model="landingModel">         
+            <img src="img/connect.png" class="application-logo" /><br />
+            <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
+            <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
         </div>
-    </div>
-    <!-- <div data-role="view" id="modalview-login" style="width: 90%;" data-model="loginModel">
-        <div data-role="header">
-            <div data-role="navbar">
-                <span>Login</span>
-                <a data-click="closeModalViewLogin" data-role="button" data-align="right">Cancel</a>
+
+       <div data-role="view" id="meetupView" data-title="Add Meetup View" data-model="meetupModel"> 
+            
+        </div>
+
+        <div data-role="view" id="secondview" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
+            <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
+                <ul id="flat-listview" data-role="listview" data-template="tmp"></ul>
             </div>
         </div>
+        
+        <div id="SelectedView" data-title="View Group" data-role="view" 
+        data-model="selectedModel">   
+        <div>Selected View</div>
+        <div><a data-role="button" data-bind="click: navigateToMain">Go to Main view</a></div>
+        </div>
 
-        <ul data-role="listview" data-style="inset">
-            <li><label for="username">Username: <input type="text" id="username" /></label></li>
-            <li><label for="password">Password: <input type="password" id="password" /></label></li>
-        </ul>
-        <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button">Login</a>
-        <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button">Register</a>
-    </div> -->
-
-    <div id="SelectedView" data-title="View Group" data-role="view" 
-    data-model="selectedModel">   
-    <div>Selected View</div>
-    <div><a data-role="button" data-bind="click: navigateToMain">Go to Main view</a></div>
+        <div data-role="layout" data-id="layout" data-platform="android">
+        <footer data-role="footer">
+         <div>
+            <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
+        </div>
+        </footer>
     </div>
-   
-<script id="tmp" type="text/x-kendo-template">
-    <p>#: name #</p>
-</script>
+       
+    <script id="tmp" type="text/x-kendo-template">
+        <p>#: name #</p>
+    </script>
 
-<style scoped>
-#modalview-login-button,
-#modalview-reg-button,
-#modalview-open-button {
-    display: block;
-    text-align: center;
-    margin: .6em .8em;
-    font-size: 1.2em;
-}
-
-#modalview-open-button {
-    margin: 0 3em;
-    padding: .5em;
-}
-.km-flat #modalview-open-button {
-    color: #fff;
-}
-
-#modalview-camera {
-    text-align: center;
-}
-
-#modalview-camera img {
-    display: block;
-    margin: 30px auto;
-}
-
-/*#modalview-camera .km-content,
-.km-ios #modalview-login .km-content {
-    background: url(../../content/shared/images/patterns/pattern1.png) repeat 0 0;
-}*/
-
-#modalview-login label {
-    display: inline-block;
-    width: 100%;
-}
-.km-ios #modalview-camera .km-button,
-.km-ios #modalview-login .km-button,
-.km-ios #modalview-camera .km-navbar,
-.km-ios #modalview-login .km-header,
-.km-blackberry #modalview-camera .km-navbar,
-.km-blackberry #modalview-login .km-navbar
-{
-    background-color: #000;
-}
-
-.km-blackberry #modalview-camera .km-button
-{
-    color: #fff;
-}
-
-.km-ios #modalview-camera .km-button:active,
-.km-ios #modalview-camera .km-state-active,
-.km-ios #modalview-login .km-button:active,
-.km-ios #modalview-login .km-state-active {
-    background-color: #2e2e2e;
-}
-
-.km-ios #modalview-login #modalview-login-button,
-.km-flat #modalview-login #modalview-login-button {
-    background-color: Green;
-    color: #fff;
-}
-
-.km-tablet .km-ios #modalview-camera .km-view-title,
-.km-tablet .km-ios #modalview-login .km-view-title {
-    color: #fff;
-    text-shadow: 0 -1px rgba(0,0,0,.5);
-}
-
-</style>
-<script>
-<!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-
-var landingModel = kendo.observable({
-    navigateToSelected: function (e) {
-        var param = $(e.target).data('parameter');
-        if (param === "login") 
-        {                          
-             window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#secondview");}, function() { window.kendoMobileApplication.showLoading(); }, closeModalViewLogin);
-        }
-        else if (param === "help") 
+    <style scoped>
+       .buttonAppearance .km-button:not(.km-back)
+            {
+                width: 90%;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+            }
+     #layoutView .km-view-title
         {
-            alert("Login Status : " + current.getLoginStatus());
+            visibility: inherit;
         }
 
+        .km-android #layoutView .km-view-title
+        {
+            display: block;
+            position: static;
+        }
+    #modalview-login-button,
+    #modalview-reg-button,
+    #modalview-open-button {
+        display: block;
+        text-align: center;
+        margin: .6em .8em;
+        font-size: 1.2em;
     }
-});
-    
-function closeModalViewLogin(tokenUrl) {
-    //TODO: Remove the hardcoded token url and pass the url generated from the login
-     $("#flat-listview").kendoMobileListView(
-        { 
-            dataSource: {
-        transport: {
-          read: {
-            dataType: "jsonp",
-            url: "https://graph.facebook.com/me/friends?access_token=CAAI4xeZAVkggBAFVmEWTcd2UD6871qBeXjoWr4CiaY4NUlT9nwDsnHmSH6H9ENZBw2BwdIFxI95oOsfyz3gEdZB80KyCxXZAleA7UZBu9ybZAl2P2NsGVXG5EDy8XY4RrLRN838K947gDEsDhjW4Mmm0GGSrALOeqGZAooGAZBBoHjyAmvCXDzWnPjcyMpZAJhGgZD&callback=?"
-          }
-        },
-         schema: {
-                data: "data"
+
+    #modalview-open-button {
+        margin: 0 3em;
+        padding: .5em;
+    }
+    .km-flat #modalview-open-button {
+        color: #fff;
+    }
+
+    #loginView {
+        text-align: center;
+    }
+
+    #loginView img {
+        display: block;
+        margin: 30px auto;
+    }
+
+    /*#loginView .km-content,
+    .km-ios #modalview-login .km-content {
+        background: url(../../content/shared/images/patterns/pattern1.png) repeat 0 0;
+    }*/
+
+    #modalview-login label {
+        display: inline-block;
+        width: 100%;
+    }
+    .km-ios #loginView .km-button,
+    .km-ios #modalview-login .km-button,
+    .km-ios #loginView .km-navbar,
+    .km-ios #modalview-login .km-header,
+    .km-blackberry #loginView .km-navbar,
+    .km-blackberry #modalview-login .km-navbar
+    {
+        background-color: #000;
+    }
+
+    .km-blackberry #loginView .km-button
+    {
+        color: #fff;
+    }
+
+    .km-ios #loginView .km-button:active,
+    .km-ios #loginView .km-state-active,
+    .km-ios #modalview-login .km-button:active,
+    .km-ios #modalview-login .km-state-active {
+        background-color: #2e2e2e;
+    }
+
+    .km-ios #modalview-login #modalview-login-button,
+    .km-flat #modalview-login #modalview-login-button {
+        background-color: Green;
+        color: #fff;
+    }
+
+    .km-tablet .km-ios #loginView .km-view-title,
+    .km-tablet .km-ios #modalview-login .km-view-title {
+        color: #fff;
+        text-shadow: 0 -1px rgba(0,0,0,.5);
+    }
+
+    </style>
+    <script>
+    <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+    if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+    if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+    if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+
+    // var footerModel = kendo.observable({
+    //     addNewMeetup: function (e) {
+          
+    //         var param = $(e.target).data('parameter');
+    //         if (param === "addMeetup") 
+    //         {
+    //             alert("Login Status : " + current.getLoginStatus());
+    //         }
+
+    //     }
+    // });
+
+    var meetupModel = kendo.observable({
+        loadFriends: function () {
+       
+        }
+
+    });
+
+    var landingModel = kendo.observable({
+        navigateToSelected: function (e) {
+            var param = $(e.target).data('parameter');
+            if (param === "login") 
+            {                          
+                 window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#secondview");}, function() { window.kendoMobileApplication.showLoading(); }, closeModalViewLogin);
+            }
+            else if (param === "help") 
+            {
+                alert("Login Status : " + current.getLoginStatus());
+            }
+
+        }
+    });
+        
+    function alertMe() {
+        // body...
+          alert("Meetup! => transition to the meetup view here");
+    }
+    function closeModalViewLogin(tokenUrl) {
+        //TODO: Remove the hardcoded token url and pass the url generated from the login
+         $("#flat-listview").kendoMobileListView(
+            { 
+                dataSource: {
+            transport: {
+              read: {
+                dataType: "jsonp",
+                url: "https://graph.facebook.com/me/friends?access_token=CAAI4xeZAVkggBAFVmEWTcd2UD6871qBeXjoWr4CiaY4NUlT9nwDsnHmSH6H9ENZBw2BwdIFxI95oOsfyz3gEdZB80KyCxXZAleA7UZBu9ybZAl2P2NsGVXG5EDy8XY4RrLRN838K947gDEsDhjW4Mmm0GGSrALOeqGZAooGAZBBoHjyAmvCXDzWnPjcyMpZAJhGgZD&callback=?"
+              }
             },
-            pageSize: 10
-      },
-      template: $("#tmp").html()
-            });
-}
-</script>
+             schema: {
+                    data: "data"
+                }
+          },
+          template: $("#tmp").html()
+                });
+    }
+    </script>
 
 
-<script>
-window.kendoMobileApplication = new kendo.mobile.Application(document.body, {
-    transition: "slide",
-} );
-window.kendoMobileApplication.navigate("#modalview-camera");
+    <script>
+    window.kendoMobileApplication = new kendo.mobile.Application(document.body, {
+        transition: "slide",
+    } );
+    window.kendoMobileApplication.navigate("#loginView");
 
-
-</script>
-</body>
-</html>
+    </script>
+    </body>
+    </html>
