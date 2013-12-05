@@ -87,106 +87,29 @@
        
          <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
                 <form action="./index.html">
-        <ul data-role="listview" data-style="inset">
+         <ul data-role="listview" data-style="inset">
             <li>
-                <label>Select element
-                    <select>
-                        <option value="First Option">First Option</option>
-                        <option value="Second Option">Second Option</option>
-                        <option value="Third Option">Third Option</option>
-                        <option value="Fourth Option">Fourth Option</option>
-                    </select>
-                </label>
-            </li>
-            <li>
-                <label>DropDownList
-                    <select id="dropdown">
-                        <option value="First Option">First Option</option>
-                        <option value="Second Option">Second Option</option>
-                        <option value="Third Option">Third Option</option>
-                        <option value="Fourth Option">Fourth Option</option>
-                        <option value="First Option">Fifth Option</option>
-                        <option value="Sixth Option">Sixth Option</option>
-                    </select>
-                </label>
-            </li>
-            <li>
-                <label>Slider
-                    <input id="slider" type="range" max="100" />
-                </label>
-            </li>
-            <li>
-                <label>Type text
+                <label>
+                    Meet Up Name
                     <input type="text" value="Text" />
                 </label>
             </li>
             <li>
                 <label>
-                Type password
-                <input type="password" value="password" />
-                </label>
-            </li>
-            <li>
-                <label>
-                Type search
-                <input type="search" value="search" />
-                </label>
-            </li>
-            <li>
-                <label>
-                Type url
-                <input type="url" value="http://www.kendoui.com" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type email
-                    <input type="email" value="kendoui@kendoui.com" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type number
-                    <input type="number" value="20" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type tel
-                    <input type="tel" value="+44 22 11 10" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type date
+                    Date
                     <input type="date" value="2012-03-22" />
                 </label>
             </li>
-            <li>
+               <li>
                 <label>
-                    Type time
+                     <a data-role="button" id="addFriends" data-click="addFriendsToMeetup">Add Friends to Meetup </a>
+                </label>
+            </li>
+             <li>
+                <label>
                     <input type="time" value="22:30" />
                 </label>
-            </li>
-            <li>
-                <label>
-                    Type month
-                    <input type="month" value="2012-01" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Type datetime-local
-                    <input type="datetime-local" value="2012-03-22T20:15" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Textarea
-                    <textarea style="resize: none">Multiline
-Text</textarea>
-                </label>
-            </li>
+            </li>             
         </ul>
     </form>
         </div>
@@ -366,6 +289,7 @@ Text</textarea>
         </style>
         <script>
         function initForm() {
+            alert("Init form");
         var body = $(".km-pane");
 
         if (kendo.ui.DropDownList) {
@@ -397,7 +321,7 @@ Text</textarea>
                 var param = $(e.target).data('parameter');
                 if (param === "login") 
                 {                          
-                 window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#friendsView");}, function() { animate() }, closeModalViewLogin);
+                 window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#forms");}, function() { animate() }, closeModalViewLogin);
              }
              else if (param === "help") 
              {
@@ -486,6 +410,11 @@ Text</textarea>
             }
         }, 1000);
     }
+
+    function addFriendsToMeetup () {
+        // body...
+        window.kendoMobileApplication.navigate("#friendsView");
+    }
     </script>
 
 
@@ -494,8 +423,6 @@ Text</textarea>
         transition: "slide",
         initial: "loginView"
     } );
-    //window.kendoMobileApplication.navigate("#loading");
-
     </script>
     </body>
     </html>
