@@ -17,11 +17,6 @@ var ApplicationUser = (function (Context) {
 		this.friendsIDs = friendsList;
 	};
 
-	ApplicationUser.prototype.hello = function() {
-		// body...
-		alert("Hello!");
-	};
-
 	return ApplicationUser;
 
 }) ();
