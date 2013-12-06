@@ -56,11 +56,14 @@
       callback1();
       this.fb.login(
        function(response) {
-        console.log("This is the authentication token " + response.authResponse.accessToken);
-        var accessToken = response.authResponse.accessToken
-        var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"
-        callback2(tokenUrl);
-        callback(); 
+          FB.api('/me', function(response1) {
+          alert('Good to see you, ' + response1.name + '.');
+           console.log("This is the authentication token " + response.authResponse.accessToken);
+            var accessToken = response.authResponse.accessToken
+            var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"
+            callback2(tokenUrl);
+            callback(); 
+        });       
       }
       ,
       { scope: "email" }
