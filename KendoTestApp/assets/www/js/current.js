@@ -1,7 +1,5 @@
     var Current = (function (Context) {
-      var loginStatus;
-      var applicationUser;
-      
+
       function Current (FB) {
         
         this.applicationUser = new ApplicationUser();
@@ -57,7 +55,10 @@
       this.fb.login(
        function(response) {
           FB.api('/me', function(response1) {
-          alert('Good to see you, ' + response1.name + '.');
+            currentObject.applicationUser.setNameAndURL(response1.name, "", response1.id);
+         // alert('Good to see you, ' + response1.name + '.'  + "Facebook ID:" +response1.id);
+         alert("Current Object user name" + currentObject.applicationUser.userName);
+         currentObject.applicationUser.hello();
            console.log("This is the authentication token " + response.authResponse.accessToken);
             var accessToken = response.authResponse.accessToken
             var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"

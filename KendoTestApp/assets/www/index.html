@@ -303,6 +303,7 @@
             },
             createMeetup: function () {
                 var json = addMeetupModel.toJSON();
+                json.facebookId = window.current.applicationUser.userId;
                 alert(JSON.stringify(json));
                 // TODO: sabrym use ajax and save to server !
                 // need to save the friends that have been added as well
