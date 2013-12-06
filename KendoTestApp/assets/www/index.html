@@ -21,7 +21,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
         <meta charset="utf-8">
-         <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />   
+        <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />   
         <link rel="stylesheet" href="css/kendo.default.min.css" type="text/css" />   
         <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" />   
         <style>
@@ -30,11 +30,10 @@
             visibility: hidden;
         }
         </style>  
+
         <script type="text/javascript" src="cordova-2.6.0.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-ui-1.10.3.js"></script>
-
-        <!-- TODO: change this to a local location -->
         <script src="js/kendo.all.min.js"></script>
         <script src="js/kendo.mobile.min.js"></script>
 
@@ -64,7 +63,7 @@
         function onBackButtonPressed () {
             // sabrym : we can use the navigator object to go back in history else if we do not want to 
             // see fit that the application needs to be closed then can call   navigator.app.exitApp();
-             navigator.app.backHistory();
+            navigator.app.backHistory();
         }
 
         </script>
@@ -78,171 +77,171 @@
             <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
             <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
             <button id="show" data-role="button">Show Loading Popup</button>
-        </div>
-<!-- 
-        <div id="loading" data-role="view" class="km-insetcontent" data-init="viewInit" data-hide="viewHide" data-title="Loading Popup">
-            <button id="show" data-role="button">Show Loading Popup</button>
-        </div> -->
-
-       
-         <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
-                <form action="./index.html">
-         <ul data-role="listview" data-style="inset">
-            <li>
-                <label>
-                    Meet Up Name
-                    <input type="text" value="Text" />
-                </label>
-            </li>
-            <li>
-                <label>
-                    Date
-                    <input type="date" value="2012-03-22" />
-                </label>
-            </li>
+        </div>       
+        <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
+            <form>
+               <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>
+                        Meet Up Name
+                        <input type="text" value="Text"  data-bind="value: meetupName" id="meetupName" data-change="changeListener"/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Date
+                        <input type="date"  data-bind="value: meetupDate" id="meetupDate"/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                       <a data-role="button" id="addFriends" data-bind="click: addFriendsToMeetup">Add Friends to Meetup </a>
+                   </label>
+               </li>
                <li>
+                Meetup Time
                 <label>
-                     <a data-role="button" id="addFriends" data-click="addFriendsToMeetup">Add Friends to Meetup </a>
+                    <input type="time" data-bind="value: meetupTime" id="meetupTime"/>
                 </label>
-            </li>
-             <li>
-                <label>
-                    <input type="time" value="22:30" />
-                </label>
-            </li>             
+                <li>
+                    <label>
+                       <a data-role="button" id="createMeetup" data-bind="click: createMeetup">Create Meetup</a>
+                   </label>
+               </li>
+            </li>                     
         </ul>
     </form>
-        </div>
+</div>
 
-        <div data-role="view" id="friendsView" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
-            <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-                <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
-            </div>
-        </div>
-        
-        <div data-role="layout" data-id="layout" data-platform="android">
-            <footer data-role="footer">
-             <div>
-                <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
-            </div>
-        </footer>
+<div data-role="view" id="friendsView" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
+    <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
+        <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
     </div>
-    <!-- Application Views End -->
+</div>
 
-    <script id="friendsTemplate" type="text/x-kendo-template">
-    <p>#: name #</p>
-    </script>
+<div data-role="layout" data-id="layout" data-platform="android">
+    <footer data-role="footer">
+       <div>
+        <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
+    </div>
+</footer>
+</div>
+<!-- Application Views End -->
+
+<script id="friendsTemplate" type="text/x-kendo-template">
+<p>#: name #</p>
+</script>
 
 <!-- TODO: incorporate separate css file -->
-    <style scoped>
-    #forms input:not([type=checkbox]):not([type=radio]),
-    #forms select,
-    #forms .k-dropdown
-    {
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        width: 50%;
-    }
-    #forms label {
-        display: inline-block;
-        width: 100%;
-    }
-     .km-ios #loading .km-content
-    {
-        background: transparent;
-    }
+<style scoped>
+#forms input:not([type=checkbox]):not([type=radio]),
+#forms select,
+#forms .k-dropdown
+{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 50%;
+}
+#forms label {
+    display: inline-block;
+    width: 100%;
+}
+.km-ios #loading .km-content
+{
+    background: transparent;
+}
 
-    #loading .km-content
-    {
-        text-align: center;
-    }
+#loading .km-content
+{
+    text-align: center;
+}
 
-    #show
-    {
-        margin-top: 100px;
-        font-size: 1.2em;
-    }
+#show
+{
+    margin-top: 100px;
+    font-size: 1.2em;
+}
 
-    /* Example Counter */
-    .km-meego h1.loaderHeading,
-    .km-android h1.loaderHeading,
-    .km-blackberry h1.loaderHeading
-    {
-        display: block;
-        position: absolute;
-        overflow: hidden;
-        width: 1em;
-        left: 50%;
-        height: 1em;
-        top: 50%;
-        font-size: 1.2rem;
-        margin: -.65em 0 0 -.5em;
-    }
+/* Example Counter */
+.km-meego h1.loaderHeading,
+.km-android h1.loaderHeading,
+.km-blackberry h1.loaderHeading
+{
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    width: 1em;
+    left: 50%;
+    height: 1em;
+    top: 50%;
+    font-size: 1.2rem;
+    margin: -.65em 0 0 -.5em;
+}
 
-    .km-android h1.loaderHeading
-    {
-        margin: -.55em 0 0 -.5em;
-    }
+.km-android h1.loaderHeading
+{
+    margin: -.55em 0 0 -.5em;
+}
 
-    .km-flat h1.loaderHeading,
-    .km-wp h1.loaderHeading
-    {
-        display: block;
-    }
+.km-flat h1.loaderHeading,
+.km-wp h1.loaderHeading
+{
+    display: block;
+}
 
-    .km-ios h1.loaderHeading
-    {
-        font-size: 1rem;
-    }
-    .km-meego h1.loaderHeading,
-    .km-blackberry h1.loaderHeading
-    {
-        font-size: 1.5rem;
-    }
+.km-ios h1.loaderHeading
+{
+    font-size: 1rem;
+}
+.km-meego h1.loaderHeading,
+.km-blackberry h1.loaderHeading
+{
+    font-size: 1.5rem;
+}
 
 
-    .buttonAppearance .km-button:not(.km-back)
-    {
-        width: 90%;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-    }
-    #layoutView .km-view-title
-    {
-        visibility: inherit;
-    }
+.buttonAppearance .km-button:not(.km-back)
+{
+    width: 90%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+#layoutView .km-view-title
+{
+    visibility: inherit;
+}
 
-    .km-android #layoutView .km-view-title
-    {
-        display: block;
-        position: static;
-    }
-    #modalview-login-button,
-    #modalview-reg-button,
-    #modalview-open-button {
-        display: block;
-        text-align: center;
-        margin: .6em .8em;
-        font-size: 1.2em;
-    }
+.km-android #layoutView .km-view-title
+{
+    display: block;
+    position: static;
+}
+#modalview-login-button,
+#modalview-reg-button,
+#modalview-open-button {
+    display: block;
+    text-align: center;
+    margin: .6em .8em;
+    font-size: 1.2em;
+}
 
-    #modalview-open-button {
-        margin: 0 3em;
-        padding: .5em;
-    }
-    .km-flat #modalview-open-button {
-        color: #fff;
-    }
+#modalview-open-button {
+    margin: 0 3em;
+    padding: .5em;
+}
+.km-flat #modalview-open-button {
+    color: #fff;
+}
 
-    #loginView {
-        text-align: center;
-    }
+#loginView {
+    text-align: center;
+}
 
-    #loginView img {
-        display: block;
-        margin: 30px auto;
-    }
+#loginView img {
+    display: block;
+    margin: 30px auto;
+}
 
     /*#loginView .km-content,
     .km-ios #modalview-login .km-content {
@@ -290,64 +289,63 @@
         </style>
         <script>
         // TODO: incorporate in separate JS file
-        function initForm() {
-            alert("Init form");
-        var body = $(".km-pane");
-
-        if (kendo.ui.DropDownList) {
-            $("#dropdown").kendoDropDownList({
-                // The options are needed only for the desktop demo, remove them for mobile.
-                popup: { appendTo: body },
-                animation: { open: { effects: body.hasClass("km-android") ? "fadeIn" : body.hasClass("km-ios") || body.hasClass("km-wp") ? "slideIn:up" : "slideIn:down" } }
-            });
-        }
-
-        if (kendo.ui.Slider) {
-            $("#slider").kendoSlider({ tooltip: { enabled: false } });
-        }
-    }
+        
         <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
         if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
         if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
         if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-        var meetupModel = kendo.observable({
+        var addMeetupModel = kendo.observable({
+            meetupTime: "22:30",
+            meetupName: "My Pretty Meetup",
             loadFriends: function () {
 
+            },
+            createMeetup: function () {
+                var json = addMeetupModel.toJSON();
+                alert(JSON.stringify(json));
+                // TODO: sabrym use ajax and save to server !
+                // need to save the friends that have been added as well
+                // TODO: use one request or two for this purpose??
             }
 
         });
+
+        function initForm() {
+            alert("Init form");
+
+        }
 
         var landingModel = kendo.observable({
             navigateToSelected: function (e) {
                 var param = $(e.target).data('parameter');
                 if (param === "login") 
-                {                          
-                 window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#forms");}, function() { animate() }, closeModalViewLogin);
-             }
-             else if (param === "help") 
-             {
-                alert("Login Status : " + current.getLoginStatus());
-            }
+                {           
+                    alert("Log me in");               
+                    window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#forms");}, function() { animate() }, queryFriends);
+                }
+                else if (param === "help") 
+                {
+                    alert("Login Status : " + current.getLoginStatus());
+                }
 
-        }
-    });
+            }
+        });
 
         function alertMe() {
         // body...
         alert("Meetup! => transition to the meetup view here");
     }
 
-    function closeModalViewLogin(tokenUrl) {
+    function queryFriends(tokenUrl) {
         hideLoader();
-        //TODO: Remove the hardcoded token url and pass the url generated from the login
         $("#flat-listview").kendoMobileListView(
         { 
             dataSource: {
                 transport: {
                   read: {
                     dataType: "jsonp",
-                    url: "https://graph.facebook.com/me/friends?access_token=CAAI4xeZAVkggBAFVmEWTcd2UD6871qBeXjoWr4CiaY4NUlT9nwDsnHmSH6H9ENZBw2BwdIFxI95oOsfyz3gEdZB80KyCxXZAleA7UZBu9ybZAl2P2NsGVXG5EDy8XY4RrLRN838K947gDEsDhjW4Mmm0GGSrALOeqGZAooGAZBBoHjyAmvCXDzWnPjcyMpZAJhGgZD&callback=?"
+                    url: tokenUrl
                 }
             },
             schema: {
@@ -362,16 +360,13 @@
 
 
     // loading stuff
-
     var showButton, interval, loaderElement;
      //var currentDiv = $("#show");
-    function viewInit(e) {
+     function viewInit(e) {
         showButton = $("#show").bind(kendo.support.mouseup, function() {
-
-                       
-                        currentDiv.animate({ opacity: 0 });
-                        startLoading();
-                     });
+            currentDiv.animate({ opacity: 0 });
+            startLoading();
+        });
 
         loaderElement = kendoMobileApplication.pane.loader.element.find("h1");
     }
@@ -389,17 +384,17 @@
     }
 
     function viewHide(e) {
-         var currentDiv = $("#loginView");
-        currentDiv.animate({ opacity: 1 });
-        hideLoader();
-    }
+       var currentDiv = $("#loginView");
+       currentDiv.animate({ opacity: 1 });
+       hideLoader();
+   }
 
-    function startLoading() {
-        var currentDiv = $("#loginView");
-        hideLoader();
-        var seconds = 5;
+   function startLoading() {
+    var currentDiv = $("#loginView");
+    hideLoader();
+    var seconds = 5;
 
-        loaderElement.text(seconds + " seconds left!").addClass("loaderHeading");
+    loaderElement.text(seconds + " seconds left!").addClass("loaderHeading");
 
         kendoMobileApplication.showLoading(); //show loading popup
 
@@ -426,5 +421,5 @@
         initial: "loginView"
     } );
     </script>
-    </body>
-    </html>
+</body>
+</html>
