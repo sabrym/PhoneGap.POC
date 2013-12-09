@@ -106,7 +106,7 @@
             </li>
              <li>
                 Meetup Location
-                <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: food, value: imageSrc" ></select></label>
+                <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: locations, value: imageSrc" ></select></label>
             </li>
             <li>
                 <label>
@@ -158,16 +158,16 @@
 
 <div data-role="view" id="friendsView" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
     <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-        <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
+        <ul id="flat-listview" data-role="listview" data-template="friendsTemplate" data-click="onClick"></ul>
     </div>
 </div>
 
-<div data-role="view" id="addFriendsToMeetupView" data-layout="layout" data-title="Friends View" data-model="friendsToMeetupViewModel" data-layout="layout">
+<!-- <div data-role="view" id="addFriendsToMeetupView" data-layout="layout" data-title="Friends View" data-model="friendsToMeetupViewModel" data-layout="layout">
     <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
         <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
     </div>
 </div>
-
+ -->
 <div data-role="layout" data-id="layout" data-platform="android">
     <footer data-role="footer">
      <div>
@@ -178,7 +178,7 @@
 <!-- Application Views End -->
 
 <script id="friendsTemplate" type="text/x-kendo-template">
-<p>#: name #</p>
+<div><img src= #=picture.data.url# alt="#: data.name #"/><p>#: name #</p> </div>
 </script>
 
 <!-- TODO: incorporate separate css file -->
@@ -335,9 +335,19 @@
             text-shadow: 0 -1px rgba(0,0,0,.5);
         }
 
+         #flat-listview .listview-selected {
+            background-color: #FFFF00;
+        }
+
         </style>
         <script>
         // TODO: incorporate in separate JS file
+        function onClick(e) {
+            var index = $(e.item).index();
+            alert(e.item + "Index of item: " + index);
+            //alert(window.current.retrievedFriends[index]);
+            e.item.toggleClass("listview-selected");
+        }
         
         <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
         if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
@@ -355,23 +365,22 @@
             createMeetup: function () {
                 var tempMeetupModel = addMeetupModel;
                 delete tempMeetupModel.food;
-                
+
                 var json = tempMeetupModel.toJSON();
                 json.facebookId = window.current.applicationUser.userId;
                 alert(JSON.stringify(json));
-                // alert("Token url test" + window.current.tokenUrl);
                 // TODO: sabrym use ajax and save to server !
                 // need to save the friends that have been added as well
                 // TODO: use one request or two for this purpose??
             },
             imageSrc: null,
-    food: [
-        { name: "Mishi Kobe Niku", url: "../../content/web/foods/9.jpg" },
-        { name: "Chef Anton's Cajun Seasoning", url: "../../content/web/foods/4.jpg" },
-        { name: "Queso Manchego La Pastora", url: "../../content/web/foods/12.jpg" },
-    ]
+            locations: [
+                { name: "Mishi Kobe Niku", url: "../../content/web/foods/9.jpg" },
+                { name: "Chef Anton's Cajun Seasoning", url: "../../content/web/foods/4.jpg" },
+                { name: "Queso Manchego La Pastora", url: "../../content/web/foods/12.jpg" },
+            ]
         });
-        addMeetupModel.imageSrc = addMeetupModel.food[0].url;
+        addMeetupModel.imageSrc = addMeetupModel.locations[0].url;
         
         function initForm() {
             alert("Init form");
@@ -384,7 +393,7 @@
                 if (param === "login") 
                 {           
                     alert("Log me in");               
-                    window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#forms");}, function() { animate() }, queryFriends);
+                    window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#friendsView");}, function() { animate() }, queryFriends);
                 }
                 else if (param === "help") 
                 {
@@ -402,7 +411,7 @@
     function queryMeetups (userId) {
         // query the users meetups.. all being existing, 
     }
-    function queryFriends(tokenUrl) {
+    function queryFriends(tokenUrl, addFriends) {
         hideLoader();
         $("#flat-listview").kendoMobileListView(
         { 
@@ -414,8 +423,17 @@
                 }
             },
             schema: {
-                data: "data"
+                data: "data",
             },
+             change: function(e) {
+                if (e.items !== undefined) 
+                {
+                    addFriends(e.items);
+                }
+              //e.items
+              console.log("DataSource changed" + e.items[0].picture.data.url);
+              console.log("Reason: `" + (e.action || "data bound") + "`");
+            }
         },
         selectable: "single",
         template: $("#friendsTemplate").html()

@@ -49,18 +49,18 @@
            }
          }
 
-         Current.prototype.loginUser = function(callback, callback1, callback2) {
+         Current.prototype.loginUser = function(callback, callback1, loadFriendsCallback) {
           var currentObject = this;
-          // callback1();
+          //  callback1();
           this.fb.login(
            function(response) {
               FB.api('/me', function(response1) {
                 currentObject.applicationUser.setNameAndURL(response1.name, "", response1.id);
                 alert("Current Object user name" + currentObject.applicationUser.userName);
                 var accessToken = response.authResponse.accessToken
-                var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?";
+                var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&fields=name,picture&callback=?";
                 currentObject.tokenUrl = tokenUrl;
-                // callback2(tokenUrl);
+                loadFriendsCallback(tokenUrl, currentObject.getMyFriends);
                 callback(); 
             });       
           }
@@ -69,26 +69,9 @@
           );
         };
 
-        Current.prototype.getMyFriends = function(callback) {
-         var friendIDs = [];
-         var counter = 0;
-         var fdata;
-         this.fb.api('/me/friends', { fields: 'id, name, picture' },  function(response) {
-           if (response.error) {
-             alert(JSON.stringify(response.error));
-           } else {
-            alert(JSON.stringify(response.data));
-            var data = document.getElementById('data');
-            callback();
-          }
-        });
-
-         this.retrievedFriends = friendIDs;    
+        Current.prototype.getMyFriends = function(friendsArray) {
+          alert("In here" + friendsArray[0].name);
        };
-
-       Current.prototype.getRandomFriend = function() {
-        alert(this.retrievedFriends.length);
-      };
     };
 
     return Current;
