@@ -80,7 +80,7 @@
         </div>       
         <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
             <form>
-               <ul data-role="listview" data-style="inset">
+             <ul data-role="listview" data-style="inset">
                 <li>
                     <label>
                         Meet Up Name
@@ -95,22 +95,65 @@
                 </li>
                 <li>
                     <label>
-                       <a data-role="button" id="addFriends" data-bind="click: addFriendsToMeetup">Add Friends to Meetup </a>
-                   </label>
-               </li>
-               <li>
+                     <a data-role="button" id="addFriends" data-bind="click: addFriendsToMeetup">Add Friends to Meetup </a>
+                 </label>
+             </li>
+             <li>
                 Meetup Time
                 <label>
                     <input type="time" data-bind="value: meetupTime" id="meetupTime"/>
                 </label>
-                <li>
-                    <label>
-                       <a data-role="button" id="createMeetup" data-bind="click: createMeetup">Create Meetup</a>
-                   </label>
-               </li>
-            </li>                     
+            </li>
+             <li>
+                Meetup Location
+                <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: food, value: imageSrc" ></select></label>
+            </li>
+            <li>
+                <label>
+                 <a data-role="button" id="createMeetup" data-bind="click: createMeetup">Create Meetup</a>
+             </label>
+            </li>                                
         </ul>
-    </form>
+        </form>
+    </div>
+ <div data-role="view" data-title="Destinations" id="listview-home">
+    <ul data-role="listview" data-style="inset" data-type="group">
+        <li>
+            Africa
+            <ul>
+                <li data-icon="toprated"><a>Nairobi</a></li>
+            </ul>
+        </li>
+        <li>
+            America
+            <ul>
+                <li data-icon="globe"><a>Boston</a></li>
+                <li data-icon="globe"><a>Ottawa</a></li>
+                <li data-icon="toprated"><a>San Francisco</a></li>
+            </ul>
+        </li>
+        <li>
+            Asia
+            <ul>
+                <li data-icon="globe"><a>Bombay</a></li>
+            </ul>
+        </li>
+        <li>
+            Australia
+            <ul>
+                <li data-icon="globe"><a>Melbourne</a></li>
+                <li data-icon="toprated"><a>Sydney</a></li>
+            </ul>
+        </li>
+        <li>
+            Europe
+            <ul>
+                <li data-icon="globe"><a>Cannes</a></li>
+                <li data-icon="globe"><a>Liverpool</a></li>
+                <li data-icon="toprated"><a>London</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
 <div data-role="view" id="friendsView" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
@@ -119,9 +162,15 @@
     </div>
 </div>
 
+<div data-role="view" id="addFriendsToMeetupView" data-layout="layout" data-title="Friends View" data-model="friendsToMeetupViewModel" data-layout="layout">
+    <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
+        <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
+    </div>
+</div>
+
 <div data-role="layout" data-id="layout" data-platform="android">
     <footer data-role="footer">
-       <div>
+     <div>
         <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
     </div>
 </footer>
@@ -295,26 +344,38 @@
         if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
         if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
+
         var addMeetupModel = kendo.observable({
+           
             meetupTime: "22:30",
             meetupName: "My Pretty Meetup",
             loadFriends: function () {
 
             },
             createMeetup: function () {
-                var json = addMeetupModel.toJSON();
+                var tempMeetupModel = addMeetupModel;
+                delete tempMeetupModel.food;
+                
+                var json = tempMeetupModel.toJSON();
                 json.facebookId = window.current.applicationUser.userId;
                 alert(JSON.stringify(json));
+                // alert("Token url test" + window.current.tokenUrl);
                 // TODO: sabrym use ajax and save to server !
                 // need to save the friends that have been added as well
                 // TODO: use one request or two for this purpose??
-            }
-
+            },
+            imageSrc: null,
+    food: [
+        { name: "Mishi Kobe Niku", url: "../../content/web/foods/9.jpg" },
+        { name: "Chef Anton's Cajun Seasoning", url: "../../content/web/foods/4.jpg" },
+        { name: "Queso Manchego La Pastora", url: "../../content/web/foods/12.jpg" },
+    ]
         });
-
+        addMeetupModel.imageSrc = addMeetupModel.food[0].url;
+        
         function initForm() {
             alert("Init form");
-            //TODO: Any sort of initialization code 
+            //TODO: Any sort of initialization code if needed
         }
 
         var landingModel = kendo.observable({
@@ -338,6 +399,9 @@
         alert("Meetup! => transition to the meetup view here");
     }
 
+    function queryMeetups (userId) {
+        // query the users meetups.. all being existing, 
+    }
     function queryFriends(tokenUrl) {
         hideLoader();
         $("#flat-listview").kendoMobileListView(
@@ -360,7 +424,7 @@
 
     // loading stuff
     var showButton, interval, loaderElement;
-     function viewInit(e) {
+    function viewInit(e) {
         showButton = $("#show").bind(kendo.support.mouseup, function() {
             currentDiv.animate({ opacity: 0 });
             startLoading();
@@ -382,12 +446,12 @@
     }
 
     function viewHide(e) {
-       var currentDiv = $("#loginView");
-       currentDiv.animate({ opacity: 1 });
-       hideLoader();
-   }
+     var currentDiv = $("#loginView");
+     currentDiv.animate({ opacity: 1 });
+     hideLoader();
+ }
 
-   function startLoading() {
+ function startLoading() {
     var currentDiv = $("#loginView");
     hideLoader();
     var seconds = 5;

@@ -1,7 +1,6 @@
         var Current = (function (Context) {
 
           function Current (FB) {
-            
             this.applicationUser = new ApplicationUser();
             this.applicationId = "625372577501704"; 
             if (FB == undefined) 
@@ -52,15 +51,16 @@
 
          Current.prototype.loginUser = function(callback, callback1, callback2) {
           var currentObject = this;
-          callback1();
+          // callback1();
           this.fb.login(
            function(response) {
               FB.api('/me', function(response1) {
                 currentObject.applicationUser.setNameAndURL(response1.name, "", response1.id);
                 alert("Current Object user name" + currentObject.applicationUser.userName);
                 var accessToken = response.authResponse.accessToken
-                var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?"
-                callback2(tokenUrl);
+                var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&callback=?";
+                currentObject.tokenUrl = tokenUrl;
+                // callback2(tokenUrl);
                 callback(); 
             });       
           }
