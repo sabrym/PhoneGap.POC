@@ -116,7 +116,7 @@
         </ul>
         </form>
     </div>
- <div data-role="view" data-title="Destinations" id="listview-home">
+ <div data-role="view" data-title="Destinations" id="listview-home" data-layout="layout">
     <ul data-role="listview" data-style="inset" data-type="group">
         <li>
             Africa
@@ -156,7 +156,7 @@
     </ul>
 </div>
 
-<div data-role="view" id="friendsView" data-layout="layout" data-title="Friends View" data-model="localViewModel" data-layout="layout">
+<div data-role="view" id="friendsView" data-title="Friends View" data-model="localViewModel">
     <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
         <ul id="flat-listview" data-role="listview" data-template="friendsTemplate" data-click="onClick"></ul>
     </div>
@@ -357,18 +357,18 @@
 
         var addMeetupModel = kendo.observable({
            
-            meetupTime: "22:30",
-            meetupName: "My Pretty Meetup",
-            loadFriends: function () {
-
+            meetupTime: "",
+            meetupName: "",
+            addFriendsToMeetup: function () {
+                window.kendoMobileApplication.navigate("#friendsView");
             },
             createMeetup: function () {
                 var tempMeetupModel = addMeetupModel;
-                delete tempMeetupModel.food;
+                delete tempMeetupModel.locations;
 
                 var json = tempMeetupModel.toJSON();
                 json.facebookId = window.current.applicationUser.userId;
-                alert(JSON.stringify(json));
+                console.log(JSON.stringify(json));
                 // TODO: sabrym use ajax and save to server !
                 // need to save the friends that have been added as well
                 // TODO: use one request or two for this purpose??
@@ -383,7 +383,7 @@
         addMeetupModel.imageSrc = addMeetupModel.locations[0].url;
         
         function initForm() {
-            alert("Init form");
+            console.log("Init form");
             //TODO: Any sort of initialization code if needed
         }
 
@@ -393,7 +393,7 @@
                 if (param === "login") 
                 {           
                     alert("Log me in");               
-                    window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#friendsView");}, function() { animate() }, queryFriends);
+                    window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#listview-home");}, function() { animate() }, queryFriends);
                 }
                 else if (param === "help") 
                 {
@@ -405,7 +405,7 @@
 
         function alertMe() {
         // body...
-        alert("Meetup! => transition to the meetup view here");
+        window.kendoMobileApplication.navigate("#forms");
     }
 
     function queryMeetups (userId) {
