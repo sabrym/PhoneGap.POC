@@ -162,6 +162,17 @@
 <div><img src= #=picture.data.url# alt="#: data.name #"/><p>#: name #</p> </div>
 </script>
         <script>
+   function onBackButtonPressed () {
+        //  if (window.current.listViewLoaded === true) 
+        // {
+        //     var listView = $("#flat-listview").data("kendoMobileListView");
+        //     alert("TYPE : " + listview.constructor);
+        // }
+                // sabrym : we can use the navigator object to go back in history else if we do not want to 
+                // see fit that the application needs to be closed then can call   navigator.app.exitApp();
+                navigator.app.backHistory();
+    }
+
         // TODO: incorporate in separate JS file
         function onClick(e) {
             var index = $(e.item).index();           
@@ -191,7 +202,9 @@
                 alert(window.current.applicationUser.userId);
                 window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
                 console.log(JSON.stringify(window.current.currentMeetup));
+                
                 // TODO: sabrym use ajax and save to server !
+                // we will need to handle the error scenario as well 
                 // need to save the friends that have been added as well
                 // TODO: use one request or two for this purpose??
                 // issue #1
@@ -218,7 +231,6 @@
         function initForm() {
             window.current.initializeMeetup();
             console.log("Init form");
-            //TODO: Any sort of initialization code if needed
         }
 
         var landingModel = kendo.observable({
@@ -227,7 +239,8 @@
                 if (param === "login") 
                 {           
                     alert("Log me in");               
-                    window.current.loginUser(function(){ window.kendoMobileApplication.navigate("#listview-home");}, function() { animate() }, queryFriends);
+                    window.current.loginUser(function(){ 
+                        window.kendoMobileApplication.navigate("#listview-home");}, function() { animate() }, queryFriends);
                 }
                 else if (param === "help") 
                 {
@@ -238,8 +251,10 @@
         });
 
         function alertMe() {
-        // body...
+        // we need to remove the css class from the users that have been selected
+        // and reset the flags in the application.facebook friends object          
         alert(window.current.applicationUser.imageUrl);
+        window.current.applicationUser.resetFriendsList();
         addMeetupModel.reset();
         window.kendoMobileApplication.navigate("#forms");
     }
@@ -247,7 +262,7 @@
     function queryMeetups (userId) {
         // query the users meetups.. all being existing, 
     }
-
+ var listView;
     function queryFriends(tokenUrl) {
         hideLoader();
         $("#flat-listview").kendoMobileListView(
@@ -262,10 +277,10 @@
             schema: {
                 data: "data",
             },
-            change: function(e) {
-                alert("Chane Firiing");
+            change: function(e) { 
                 if (e.items !== undefined && window.current.applicationUser.friendsList === undefined) 
                 {
+                    window.current.listViewLoaded = true;
                     window.current.applicationUser.setMyFriends(e.items);
                 }
             }

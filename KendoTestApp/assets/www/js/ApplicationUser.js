@@ -13,9 +13,16 @@ var ApplicationUser = (function (Context) {
 		this.userId = userId;
 	}
 
-	// ApplicationUser.prototype.addFriendsList = function(friendsList) {
-	// 	this.friendsIDs = friendsList;
-	// }
+	ApplicationUser.prototype.resetFriendsList = function() {
+		if (this.friendsList !== undefined) 
+		{			
+			for (var i = 0; i < this.friendsList.length; i++) {
+				if (this.friendsList[i].isSelected === true) {
+					this.friendsList[i].isSelected = false;
+				} 
+			}
+		}
+	}
 
 	ApplicationUser.prototype.setMyFriends = function(friendsArray) {
 		this.friendsList = new Array();
