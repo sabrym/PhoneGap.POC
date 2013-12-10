@@ -21,16 +21,14 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
         <meta charset="utf-8">
+
+        <!-- css styles -->
         <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />   
         <link rel="stylesheet" href="css/kendo.default.min.css" type="text/css" />   
-        <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" />   
-        <style>
-        [href*=index], #back-button
-        {
-            visibility: hidden;
-        }
-        </style>  
+        <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" /> 
+        <link rel="stylesheet" href="css/applicationStyles.css" type="text/css" />   
 
+        <!-- javascript -->
         <script type="text/javascript" src="cordova-2.6.0.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-ui-1.10.3.js"></script>
@@ -42,32 +40,15 @@
 
         <!-- facebook js sdk -->
         <script src="js/facebook-js-sdk.js"></script>
+
+        <!-- custom javascript classes -->
+        <script type="text/javascript" src="js/FacebookFriend.js"></script>
+        <script type="text/javascript" src="js/Meetup.js"></script>
         <script type="text/javascript" src="js/ApplicationUser.js"></script>
         <script type="text/javascript" src="js/current.js"></script>
-        <script type="text/javascript">
+        <script type="text/javascript" src="js/listeners.js"></script>
 
-
-        function onBodyLoad()
-        {   window.current = new Current(FB);
-            window.current.subscribeForFBEvents();             
-            document.addEventListener("deviceready", onDeviceReady, false);        
-        }
-
-        function onDeviceReady()
-        {
-            console.log("The device is ready");
-            document.addEventListener("backbutton", onBackButtonPressed, false);
-            window.current.initFb();
-        }
-
-        function onBackButtonPressed () {
-            // sabrym : we can use the navigator object to go back in history else if we do not want to 
-            // see fit that the application needs to be closed then can call   navigator.app.exitApp();
-            navigator.app.backHistory();
-        }
-
-        </script>
-        <title>Kendo Mobile Tryout - 99x</title>
+        <title>PhoneGap.POC</title>
     </head>
     <body onload="onBodyLoad()"> 
 
@@ -180,173 +161,12 @@
 <script id="friendsTemplate" type="text/x-kendo-template">
 <div><img src= #=picture.data.url# alt="#: data.name #"/><p>#: name #</p> </div>
 </script>
-
-<!-- TODO: incorporate separate css file -->
-<style scoped>
-#forms input:not([type=checkbox]):not([type=radio]),
-#forms select,
-#forms .k-dropdown
-{
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 50%;
-}
-#forms label {
-    display: inline-block;
-    width: 100%;
-}
-.km-ios #loading .km-content
-{
-    background: transparent;
-}
-
-#loading .km-content
-{
-    text-align: center;
-}
-
-#show
-{
-    margin-top: 100px;
-    font-size: 1.2em;
-}
-
-/* Example Counter */
-.km-meego h1.loaderHeading,
-.km-android h1.loaderHeading,
-.km-blackberry h1.loaderHeading
-{
-    display: block;
-    position: absolute;
-    overflow: hidden;
-    width: 1em;
-    left: 50%;
-    height: 1em;
-    top: 50%;
-    font-size: 1.2rem;
-    margin: -.65em 0 0 -.5em;
-}
-
-.km-android h1.loaderHeading
-{
-    margin: -.55em 0 0 -.5em;
-}
-
-.km-flat h1.loaderHeading,
-.km-wp h1.loaderHeading
-{
-    display: block;
-}
-
-.km-ios h1.loaderHeading
-{
-    font-size: 1rem;
-}
-.km-meego h1.loaderHeading,
-.km-blackberry h1.loaderHeading
-{
-    font-size: 1.5rem;
-}
-
-
-.buttonAppearance .km-button:not(.km-back)
-{
-    width: 90%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-#layoutView .km-view-title
-{
-    visibility: inherit;
-}
-
-.km-android #layoutView .km-view-title
-{
-    display: block;
-    position: static;
-}
-#modalview-login-button,
-#modalview-reg-button,
-#modalview-open-button {
-    display: block;
-    text-align: center;
-    margin: .6em .8em;
-    font-size: 1.2em;
-}
-
-#modalview-open-button {
-    margin: 0 3em;
-    padding: .5em;
-}
-.km-flat #modalview-open-button {
-    color: #fff;
-}
-
-#loginView {
-    text-align: center;
-}
-
-#loginView img {
-    display: block;
-    margin: 30px auto;
-}
-
-    /*#loginView .km-content,
-    .km-ios #modalview-login .km-content {
-        background: url(../../content/shared/images/patterns/pattern1.png) repeat 0 0;
-        }*/
-
-        #modalview-login label {
-            display: inline-block;
-            width: 100%;
-        }
-        .km-ios #loginView .km-button,
-        .km-ios #modalview-login .km-button,
-        .km-ios #loginView .km-navbar,
-        .km-ios #modalview-login .km-header,
-        .km-blackberry #loginView .km-navbar,
-        .km-blackberry #modalview-login .km-navbar
-        {
-            background-color: #000;
-        }
-
-        .km-blackberry #loginView .km-button
-        {
-            color: #fff;
-        }
-
-        .km-ios #loginView .km-button:active,
-        .km-ios #loginView .km-state-active,
-        .km-ios #modalview-login .km-button:active,
-        .km-ios #modalview-login .km-state-active {
-            background-color: #2e2e2e;
-        }
-
-        .km-ios #modalview-login #modalview-login-button,
-        .km-flat #modalview-login #modalview-login-button {
-            background-color: Green;
-            color: #fff;
-        }
-
-        .km-tablet .km-ios #loginView .km-view-title,
-        .km-tablet .km-ios #modalview-login .km-view-title {
-            color: #fff;
-            text-shadow: 0 -1px rgba(0,0,0,.5);
-        }
-
-         #flat-listview .listview-selected {
-            background-color: #FFFF00;
-        }
-
-        </style>
         <script>
         // TODO: incorporate in separate JS file
         function onClick(e) {
-            var index = $(e.item).index();
-            alert(e.item + "Index of item: " + index);
-            //alert(window.current.retrievedFriends[index]);
+            var index = $(e.item).index();           
             e.item.toggleClass("listview-selected");
+            window.current.applicationUser.friendsList[index].isSelected =(e.item.attr('class') == undefined) ? false : true;
         }
         
         <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
@@ -356,9 +176,11 @@
 
 
         var addMeetupModel = kendo.observable({
-           
+            meetupId: kendo.guid(),
             meetupTime: "",
             meetupName: "",
+            meetupDate: "",
+            meetupFriends:"",
             addFriendsToMeetup: function () {
                 window.kendoMobileApplication.navigate("#friendsView");
             },
@@ -366,23 +188,38 @@
                 var tempMeetupModel = addMeetupModel;
                 delete tempMeetupModel.locations;
 
-                var json = tempMeetupModel.toJSON();
-                json.facebookId = window.current.applicationUser.userId;
-                console.log(JSON.stringify(json));
+                alert(window.current.applicationUser.userId);
+                window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
+
+                // var json = tempMeetupModel.toJSON();
+                // json.facebookId = window.current.applicationUser.userId;
+                console.log(JSON.stringify(window.current.currentMeetup));
                 // TODO: sabrym use ajax and save to server !
                 // need to save the friends that have been added as well
                 // TODO: use one request or two for this purpose??
+                // issue #1
             },
             imageSrc: null,
+
+            // the locations needs to be taken from 4square 
+            // as referenced by issue #5 in git
             locations: [
                 { name: "Mishi Kobe Niku", url: "../../content/web/foods/9.jpg" },
                 { name: "Chef Anton's Cajun Seasoning", url: "../../content/web/foods/4.jpg" },
                 { name: "Queso Manchego La Pastora", url: "../../content/web/foods/12.jpg" },
-            ]
+            ],
+               reset: function() {
+                    this.set("meetupId", kendo.guid());
+                    this.set("meetupTime", "");
+                    this.set("meetupName", "");
+                    this.set("meetupDate", ""); 
+                    this.set("imageSrc", "");                    
+                }
         });
         addMeetupModel.imageSrc = addMeetupModel.locations[0].url;
         
         function initForm() {
+            window.current.initializeMeetup();
             console.log("Init form");
             //TODO: Any sort of initialization code if needed
         }
@@ -405,13 +242,16 @@
 
         function alertMe() {
         // body...
+        alert(window.current.applicationUser.imageUrl);
+        addMeetupModel.reset();
         window.kendoMobileApplication.navigate("#forms");
     }
 
     function queryMeetups (userId) {
         // query the users meetups.. all being existing, 
     }
-    function queryFriends(tokenUrl, addFriends) {
+
+    function queryFriends(tokenUrl) {
         hideLoader();
         $("#flat-listview").kendoMobileListView(
         { 
@@ -425,14 +265,12 @@
             schema: {
                 data: "data",
             },
-             change: function(e) {
-                if (e.items !== undefined) 
+            change: function(e) {
+                alert("Chane Firiing");
+                if (e.items !== undefined && window.current.applicationUser.friendsList === undefined) 
                 {
-                    addFriends(e.items);
+                    window.current.applicationUser.setMyFriends(e.items);
                 }
-              //e.items
-              console.log("DataSource changed" + e.items[0].picture.data.url);
-              console.log("Reason: `" + (e.action || "data bound") + "`");
             }
         },
         selectable: "single",

@@ -4,7 +4,7 @@ var ApplicationUser = (function (Context) {
 		this.friendsIDs = [];
 		this.userId = "";	
 		this.userName = "";
-		this.imageUrl = "";
+		this.imageUrl = "";		
 	}
 
 	ApplicationUser.prototype.setNameAndURL = function(name, url, userId) {
@@ -17,24 +17,20 @@ var ApplicationUser = (function (Context) {
 	// 	this.friendsIDs = friendsList;
 	// }
 
-	// ApplicationUser.prototype.getMyFriends = function(friendsArray) {
-	// 	alert("In here");
-	// 	// check if the list returned from the server is valid
-	// 	// once valid, add to the object model for later use
-	// 	if (friendsArray !== undefined) 
-	// 	{
-	// 		this.friendsList = new Array();
-	// 		for (var i = 0; i < friendsArray.length; i++) {
-	// 			var currentFriend = 
-	// 			{
-	// 				name: friendsArray[i].name;
-	// 				imageUrl: friendsArray[i].picture.data.url;
-	// 			}
+	ApplicationUser.prototype.setMyFriends = function(friendsArray) {
+		this.friendsList = new Array();
+		// check if the list returned from the server is valid
+		// once valid, add to the object model for later use
+		if (friendsArray !== undefined) 
+		{			
+			for (var i = 0; i < friendsArray.length; i++) {
+				var currentFriend = new FacebookFriend(friendsArray[i].name, friendsArray[i].picture.data.url);				
+				this.friendsList.push(currentFriend);
+			}
+		}
 
-	// 			this.friendsArray.push(currentFriend);
-	// 		}
-	// 	}
-	// }
+		alert("In here" + this.friendsList.length);
+	}
 
 	return ApplicationUser;
 

@@ -48,18 +48,16 @@
            }
          }
 
-         Current.prototype.loginUser = function(callback, callback1, loadFriendsCallback) {
+         Current.prototype.loginUser = function(callback, viewTransitionCallback, loadFriendsCallback) {
           var currentObject = this;
-          //  callback1();
           this.fb.login(
            function(response) {
               FB.api('/me', function(response1) {
                 currentObject.applicationUser.setNameAndURL(response1.name, "", response1.id);
-                alert("Current Object user name" + currentObject.applicationUser.userName);
                 var accessToken = response.authResponse.accessToken
                 var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&fields=name,picture&callback=?";
                 currentObject.tokenUrl = tokenUrl;
-                loadFriendsCallback(tokenUrl, currentObject.getMyFriends);
+                loadFriendsCallback(tokenUrl);
                 callback(); 
             });       
           }
@@ -68,8 +66,8 @@
           );
         };
 
-        Current.prototype.getMyFriends = function(friendsArray) {
-          alert("In here" + friendsArray[0].name);
+        Current.prototype.initializeMeetup = function(guid) {
+          this.currentMeetup = new Meetup();
        };
     };
 

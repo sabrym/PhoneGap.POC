@@ -10,4 +10,6 @@ var Navigator = (function (Context) {
 		this.previous = this.current;
 		this.current = viewName;
 	};
-});
+
+	return Navigator;
+}) ();

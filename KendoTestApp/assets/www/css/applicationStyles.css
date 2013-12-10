@@ -1,0 +1,160 @@
+[href*=index], #back-button
+        {
+            visibility: hidden;
+        }
+
+#forms input:not([type=checkbox]):not([type=radio]),
+#forms select,
+#forms .k-dropdown
+{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 50%;
+}
+#forms label {
+    display: inline-block;
+    width: 100%;
+}
+.km-ios #loading .km-content
+{
+    background: transparent;
+}
+
+#loading .km-content
+{
+    text-align: center;
+}
+
+#show
+{
+    margin-top: 100px;
+    font-size: 1.2em;
+}
+
+/* Example Counter */
+.km-meego h1.loaderHeading,
+.km-android h1.loaderHeading,
+.km-blackberry h1.loaderHeading
+{
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    width: 1em;
+    left: 50%;
+    height: 1em;
+    top: 50%;
+    font-size: 1.2rem;
+    margin: -.65em 0 0 -.5em;
+}
+
+.km-android h1.loaderHeading
+{
+    margin: -.55em 0 0 -.5em;
+}
+
+.km-flat h1.loaderHeading,
+.km-wp h1.loaderHeading
+{
+    display: block;
+}
+
+.km-ios h1.loaderHeading
+{
+    font-size: 1rem;
+}
+.km-meego h1.loaderHeading,
+.km-blackberry h1.loaderHeading
+{
+    font-size: 1.5rem;
+}
+
+
+.buttonAppearance .km-button:not(.km-back)
+{
+    width: 90%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+#layoutView .km-view-title
+{
+    visibility: inherit;
+}
+
+.km-android #layoutView .km-view-title
+{
+    display: block;
+    position: static;
+}
+#modalview-login-button,
+#modalview-reg-button,
+#modalview-open-button {
+    display: block;
+    text-align: center;
+    margin: .6em .8em;
+    font-size: 1.2em;
+}
+
+#modalview-open-button {
+    margin: 0 3em;
+    padding: .5em;
+}
+.km-flat #modalview-open-button {
+    color: #fff;
+}
+
+#loginView {
+    text-align: center;
+}
+
+#loginView img {
+    display: block;
+    margin: 30px auto;
+}
+
+    /*#loginView .km-content,
+    .km-ios #modalview-login .km-content {
+        background: url(../../content/shared/images/patterns/pattern1.png) repeat 0 0;
+        }*/
+
+        #modalview-login label {
+            display: inline-block;
+            width: 100%;
+        }
+        .km-ios #loginView .km-button,
+        .km-ios #modalview-login .km-button,
+        .km-ios #loginView .km-navbar,
+        .km-ios #modalview-login .km-header,
+        .km-blackberry #loginView .km-navbar,
+        .km-blackberry #modalview-login .km-navbar
+        {
+            background-color: #000;
+        }
+
+        .km-blackberry #loginView .km-button
+        {
+            color: #fff;
+        }
+
+        .km-ios #loginView .km-button:active,
+        .km-ios #loginView .km-state-active,
+        .km-ios #modalview-login .km-button:active,
+        .km-ios #modalview-login .km-state-active {
+            background-color: #2e2e2e;
+        }
+
+        .km-ios #modalview-login #modalview-login-button,
+        .km-flat #modalview-login #modalview-login-button {
+            background-color: Green;
+            color: #fff;
+        }
+
+        .km-tablet .km-ios #loginView .km-view-title,
+        .km-tablet .km-ios #modalview-login .km-view-title {
+            color: #fff;
+            text-shadow: 0 -1px rgba(0,0,0,.5);
+        }
+
+         #flat-listview .listview-selected {
+            background-color: #FFFF00;
+        }
