@@ -49,11 +49,12 @@
            }
          }
 
-         Current.prototype.loginUser = function(callback, viewTransitionCallback, loadFriendsCallback) {
+         Current.prototype.loginUser = function(callback, viewTransitionCallback, loadFriendsCallback) {          
           var currentObject = this;
           this.fb.login(
            function(response) {
               FB.api('/me', function(response1) {
+                viewTransitionCallback();
                 currentObject.applicationUser.setNameAndURL(response1.name, "", response1.id);
                 var accessToken = response.authResponse.accessToken
                 var tokenUrl = "https://graph.facebook.com/me/friends?access_token=" + accessToken + "&fields=name,picture&callback=?";

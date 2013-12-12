@@ -1,3 +1,10 @@
+var MeetupStatus = {
+	Pending: 0,
+	InProgress: 1,
+	Cancelled: 2,
+	Complete: 3
+};
+
 var Meetup = (function (Context) {
 
 	function Meetup () {
@@ -13,6 +20,7 @@ var Meetup = (function (Context) {
 		this.meetupId = kendoModel.meetupId;
 		this.meetupAttendees = getSelectedFriends(facebookFriends);
 		this.meetupCreator = creator;
+		this.meetupStatus = MeetupStatus.Pending; 
 	}
 
 	function getSelectedFriends (facebookFriends) {
