@@ -175,6 +175,7 @@
 
         // TODO: incorporate in separate JS file
         function onClick(e) {
+            alert(e.item.class);
             var index = $(e.item).index();           
             e.item.toggleClass("listview-selected");
             window.current.applicationUser.friendsList[index].isSelected =(e.item.attr('class') == undefined) ? false : true;
@@ -252,7 +253,11 @@
 
         function alertMe() {
         // we need to remove the css class from the users that have been selected
-        // and reset the flags in the application.facebook friends object          
+        // and reset the flags in the application.facebook friends object     
+        $('li').each(function(index) {
+            $(this).removeClass("listview-selected");
+        });
+     
         alert(window.current.applicationUser.imageUrl);
         window.current.applicationUser.resetFriendsList();
         addMeetupModel.reset();
