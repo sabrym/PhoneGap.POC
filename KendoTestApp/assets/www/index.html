@@ -1,360 +1,347 @@
-    <!DOCTYPE html>
-    <!--
-        Licensed to the Apache Software Foundation (ASF) under one
-        or more contributor license agreements.  See the NOTICE file
-        distributed with this work for additional information
-        regarding copyright ownership.  The ASF licenses this file
-        to you under the Apache License, Version 2.0 (the
-        "License"); you may not use this file except in compliance
-        with the License.  You may obtain a copy of the License at
+        <!DOCTYPE html>
+        <!--
+            Author:     Sabry Moulana
+            Company:    99X Technology
+            Date:       
+        -->
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+            <meta charset="utf-8">
 
-        http://www.apache.org/licenses/LICENSE-2.0
+            <!-- css styles -->
+            <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />   
+            <link rel="stylesheet" href="css/kendo.default.min.css" type="text/css" />   
+            <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" /> 
+            <link rel="stylesheet" href="css/applicationStyles.css" type="text/css" />   
 
-        Unless required by applicable law or agreed to in writing,
-        software distributed under the License is distributed on an
-        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-         KIND, either express or implied.  See the License for the
-        specific language governing permissions and limitations
-        under the License.
-    -->
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-        <meta charset="utf-8">
+            <!-- javascript -->
+            <script type="text/javascript" src="cordova-2.6.0.js"></script>
+            <script src="js/jquery.min.js"></script>
+            <script src="js/jquery-ui-1.10.3.js"></script>
+            <script src="js/kendo.all.min.js"></script>
+            <script src="js/kendo.mobile.min.js"></script>
 
-        <!-- css styles -->
-        <link rel="stylesheet" href="css/kendo.common.min.css" type="text/css" />   
-        <link rel="stylesheet" href="css/kendo.default.min.css" type="text/css" />   
-        <link rel="stylesheet" href="css/kendo.mobile.all.min.css" type="text/css" /> 
-        <link rel="stylesheet" href="css/applicationStyles.css" type="text/css" />   
+            <!-- cordova facebook plugin -->
+            <script src="js/cdv-plugin-fb-connect.js"></script>
 
-        <!-- javascript -->
-        <script type="text/javascript" src="cordova-2.6.0.js"></script>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery-ui-1.10.3.js"></script>
-        <script src="js/kendo.all.min.js"></script>
-        <script src="js/kendo.mobile.min.js"></script>
+            <!-- facebook js sdk -->
+            <script src="js/facebook-js-sdk.js"></script>
 
-        <!-- cordova facebook plugin -->
-        <script src="js/cdv-plugin-fb-connect.js"></script>
+            <!-- custom javascript classes -->
+            <script type="text/javascript" src="js/FacebookFriend.js"></script>
+            <script type="text/javascript" src="js/Meetup.js"></script>
+            <script type="text/javascript" src="js/ApplicationUser.js"></script>
+            <script type="text/javascript" src="js/current.js"></script>
+            <script type="text/javascript" src="js/listeners.js"></script>
 
-        <!-- facebook js sdk -->
-        <script src="js/facebook-js-sdk.js"></script>
+            <title>PhoneGap.POC</title>
+        </head>
+        <body onload="onBodyLoad()"> 
 
-        <!-- custom javascript classes -->
-        <script type="text/javascript" src="js/FacebookFriend.js"></script>
-        <script type="text/javascript" src="js/Meetup.js"></script>
-        <script type="text/javascript" src="js/ApplicationUser.js"></script>
-        <script type="text/javascript" src="js/current.js"></script>
-        <script type="text/javascript" src="js/listeners.js"></script>
-
-        <title>PhoneGap.POC</title>
-    </head>
-    <body onload="onBodyLoad()"> 
-
-        <!-- Application Views -->
-        <div data-role="view" id="loginView" class="km-insetcontent" data-title="Application Landing View" data-model="landingModel" data-init="viewInit" data-hide="viewHide">         
-            <img src="img/connect.png" class="application-logo" /><br />
-            <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
-            <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
-            <button id="show" data-role="button">Show Loading Popup</button>
-        </div>       
-        <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
-            <form>
-             <ul data-role="listview" data-style="inset">
-                <li>
+            <!-- Application Views -->
+            <div data-role="view" id="loginView" class="km-insetcontent" data-title="Application Landing View" data-model="landingModel" data-init="viewInit" data-hide="viewHide">         
+                <img src="img/connect.png" class="application-logo" /><br />
+                <a data-role="button" id="modalview-open-button" data-bind="click: navigateToSelected" data-parameter="login">Login</a>
+                <a data-role="button" id="modalview-help-button" data-bind="click: navigateToSelected" data-parameter="help">Help</a>
+                <button id="show" data-role="button">Show Loading Popup</button>
+            </div>       
+            <div data-role="view" id="forms" data-title="Add Meetup View" data-model="addMeetupModel" data-init="initForm" data-use-native-scrolling="true"> 
+                <form>
+                 <ul data-role="listview" data-style="inset">
+                    <li>
+                        <label>
+                            Meet Up Name
+                            <input type="text" value="Text"  data-bind="value: meetupName" id="meetupName" data-change="changeListener"/>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Date
+                            <input type="date"  data-bind="value: meetupDate" id="meetupDate"/>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                         <a data-role="button" id="addFriends" data-bind="click: addFriendsToMeetup">Add Friends to Meetup </a>
+                     </label>
+                 </li>
+                 <li>
+                    Meetup Time
                     <label>
-                        Meet Up Name
-                        <input type="text" value="Text"  data-bind="value: meetupName" id="meetupName" data-change="changeListener"/>
+                        <input type="time" data-bind="value: meetupTime" id="meetupTime"/>
                     </label>
+                </li>
+                 <li>
+                    Meetup Location
+                    <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: locations, value: imageSrc" ></select></label>
                 </li>
                 <li>
                     <label>
-                        Date
-                        <input type="date"  data-bind="value: meetupDate" id="meetupDate"/>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                     <a data-role="button" id="addFriends" data-bind="click: addFriendsToMeetup">Add Friends to Meetup </a>
+                     <a data-role="button" id="createMeetup" data-bind="click: createMeetup">Create Meetup</a>
                  </label>
-             </li>
-             <li>
-                Meetup Time
-                <label>
-                    <input type="time" data-bind="value: meetupTime" id="meetupTime"/>
-                </label>
-            </li>
-             <li>
-                Meetup Location
-                <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: locations, value: imageSrc" ></select></label>
+                </li>                                
+            </ul>
+            </form>
+        </div>
+     <div data-role="view" data-title="Destinations" id="listview-home" data-layout="layout">
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Africa
+                <ul>
+                    <li data-icon="toprated"><a>Nairobi</a></li>
+                </ul>
             </li>
             <li>
-                <label>
-                 <a data-role="button" id="createMeetup" data-bind="click: createMeetup">Create Meetup</a>
-             </label>
-            </li>                                
+                America
+                <ul>
+                    <li data-icon="globe"><a>Boston</a></li>
+                    <li data-icon="globe"><a>Ottawa</a></li>
+                    <li data-icon="toprated"><a>San Francisco</a></li>
+                </ul>
+            </li>
+            <li>
+                Asia
+                <ul>
+                    <li data-icon="globe"><a>Bombay</a></li>
+                </ul>
+            </li>
+            <li>
+                Australia
+                <ul>
+                    <li data-icon="globe"><a>Melbourne</a></li>
+                    <li data-icon="toprated"><a>Sydney</a></li>
+                </ul>
+            </li>
+            <li>
+                Europe
+                <ul>
+                    <li data-icon="globe"><a>Cannes</a></li>
+                    <li data-icon="globe"><a>Liverpool</a></li>
+                    <li data-icon="toprated"><a>London</a></li>
+                </ul>
+            </li>
         </ul>
-        </form>
     </div>
- <div data-role="view" data-title="Destinations" id="listview-home" data-layout="layout">
-    <ul data-role="listview" data-style="inset" data-type="group">
-        <li>
-            Africa
-            <ul>
-                <li data-icon="toprated"><a>Nairobi</a></li>
-            </ul>
-        </li>
-        <li>
-            America
-            <ul>
-                <li data-icon="globe"><a>Boston</a></li>
-                <li data-icon="globe"><a>Ottawa</a></li>
-                <li data-icon="toprated"><a>San Francisco</a></li>
-            </ul>
-        </li>
-        <li>
-            Asia
-            <ul>
-                <li data-icon="globe"><a>Bombay</a></li>
-            </ul>
-        </li>
-        <li>
-            Australia
-            <ul>
-                <li data-icon="globe"><a>Melbourne</a></li>
-                <li data-icon="toprated"><a>Sydney</a></li>
-            </ul>
-        </li>
-        <li>
-            Europe
-            <ul>
-                <li data-icon="globe"><a>Cannes</a></li>
-                <li data-icon="globe"><a>Liverpool</a></li>
-                <li data-icon="toprated"><a>London</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
 
-<div data-role="view" id="friendsView" data-title="Friends View" data-model="localViewModel">
-    <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-        <ul id="flat-listview" data-role="listview" data-template="friendsTemplate" data-click="onClick"></ul>
+    <div data-role="view" id="friendsView" data-title="Friends View" data-model="localViewModel">
+        <div style="color: #fff; padding: 50px 0; text-align: center;">
+            <ul id="flat-listview" data-role="listview" data-template="friendsTemplate" data-click="onClick"></ul>
+        </div>
     </div>
-</div>
 
-<!-- <div data-role="view" id="addFriendsToMeetupView" data-layout="layout" data-title="Friends View" data-model="friendsToMeetupViewModel" data-layout="layout">
-    <div style="background: url(../../content/shared/images/patterns/pattern7.png); color: #fff; padding: 50px 0; text-align: center;">
-        <ul id="flat-listview" data-role="listview" data-template="friendsTemplate"></ul>
+    <div data-role="layout" data-id="layout" data-platform="android">
+        <footer data-role="footer">
+         <div>
+            <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
+        </div>
+    </footer>
     </div>
-</div>
- -->
-<div data-role="layout" data-id="layout" data-platform="android">
-    <footer data-role="footer">
-     <div>
-        <a data-role="button" data-click="alertMe" data-icon="featured">Add a new Meetup</a>
-    </div>
-</footer>
-</div>
-<!-- Application Views End -->
+    <!-- Application Views End -->
 
-<script id="friendsTemplate" type="text/x-kendo-template">
-<div><img src= #=picture.data.url# alt="#: data.name #"/><p>#: name #</p> </div>
-</script>
-        <script>
-   function onBackButtonPressed () {
-        //  if (window.current.listViewLoaded === true) 
-        // {
-        //     var listView = $("#flat-listview").data("kendoMobileListView");
-        //     alert("TYPE : " + listview.constructor);
-        // }
-                // sabrym : we can use the navigator object to go back in history else if we do not want to 
-                // see fit that the application needs to be closed then can call   navigator.app.exitApp();
-                navigator.app.backHistory();
-    }
-
-        // TODO: incorporate in separate JS file
-        function onClick(e) {
-            alert(e.item.class);
-            var index = $(e.item).index();           
-            e.item.toggleClass("listview-selected");
-            window.current.applicationUser.friendsList[index].isSelected =(e.item.attr('class') == undefined) ? false : true;
-        }
-        
-        <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-        if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-        if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-        if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-
-
-        var addMeetupModel = kendo.observable({
-            meetupId: kendo.guid(),
-            meetupTime: "",
-            meetupName: "",
-            meetupDate: "",
-            meetupFriends:"",
-            addFriendsToMeetup: function () {
-                window.kendoMobileApplication.navigate("#friendsView");
-            },
-            createMeetup: function () {
-                var tempMeetupModel = addMeetupModel;
-                delete tempMeetupModel.locations;
-
-                alert(window.current.applicationUser.userId);
-                window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
-                console.log(JSON.stringify(window.current.currentMeetup));
-                
-                // TODO: sabrym use ajax and save to server !
-                // we will need to handle the error scenario as well 
-                // need to save the friends that have been added as well
-                // TODO: use one request or two for this purpose??
-                // issue #1
-            },
-            imageSrc: null,
-
-            // the locations needs to be taken from 4square 
-            // as referenced by issue #5 in git
-            locations: [
-                { name: "Mishi Kobe Niku", url: "../../content/web/foods/9.jpg" },
-                { name: "Chef Anton's Cajun Seasoning", url: "../../content/web/foods/4.jpg" },
-                { name: "Queso Manchego La Pastora", url: "../../content/web/foods/12.jpg" },
-            ],
-               reset: function() {
-                    this.set("meetupId", kendo.guid());
-                    this.set("meetupTime", "");
-                    this.set("meetupName", "");
-                    this.set("meetupDate", ""); 
-                    this.set("imageSrc", "");                    
-                }
-        });
-        addMeetupModel.imageSrc = addMeetupModel.locations[0].url;
-        
-        function initForm() {
-            window.current.initializeMeetup();
-            console.log("Init form");
+    <script id="friendsTemplate" type="text/x-kendo-template">
+    <div><img src= #=picture.data.url# alt="#: data.name #"/><p>#: name #</p> </div>
+    </script>
+            <script>
+       function onBackButtonPressed () {
+            //  if (window.current.listViewLoaded === true) 
+            // {
+            //     var listView = $("#flat-listview").data("kendoMobileListView");
+            //     alert("TYPE : " + listview.constructor);
+            // }
+                    // sabrym : we can use the navigator object to go back in history else if we do not want to 
+                    // see fit that the application needs to be closed then can call   navigator.app.exitApp();
+                    navigator.app.backHistory();
         }
 
-        var landingModel = kendo.observable({
-            navigateToSelected: function (e) {
-                var param = $(e.target).data('parameter');
-                if (param === "login") 
-                {           
-                    alert("Log me in");               
-                    window.current.loginUser(function(){ 
-                        window.kendoMobileApplication.navigate("#listview-home");}, function() { animate() }, queryFriends);
-                }
-                else if (param === "help") 
-                {
-                    alert("Login Status : " + current.getLoginStatus());
-                }
-
+            // TODO: incorporate in separate JS file
+            function onClick(e) {
+                alert(e.item[0].innerText);
+                var index = $(e.item).index();           
+                e.item.toggleClass("listview-selected");
+                var index = window.current.applicationUser.getFriendBasedOnName(e.item[0].innerText);
+                window.current.applicationUser.friendsList[index].isSelected =(e.item[0].className == "listview-selected") ? true : false;
             }
-        });
+            
+            <!-- These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+            if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+            if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+            if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 
-        function alertMe() {
-        // we need to remove the css class from the users that have been selected
-        // and reset the flags in the application.facebook friends object     
-        $('li').each(function(index) {
-            $(this).removeClass("listview-selected");
-        });
-     
-        alert(window.current.applicationUser.imageUrl);
-        window.current.applicationUser.resetFriendsList();
-        addMeetupModel.reset();
-        window.kendoMobileApplication.navigate("#forms");
-    }
 
-    function queryMeetups (userId) {
-        // query the users meetups.. all being existing, 
-    }
- var listView;
-    function queryFriends(tokenUrl) {
-        hideLoader();
-        $("#flat-listview").kendoMobileListView(
-        { 
-            dataSource: {
-                transport: {
-                  read: {
-                    dataType: "jsonp",
-                    url: tokenUrl
+            var addMeetupModel = kendo.observable({
+                meetupId: kendo.guid(),
+                meetupTime: "",
+                meetupName: "",
+                meetupDate: "",
+                meetupFriends:"",
+                addFriendsToMeetup: function () {
+                    window.kendoMobileApplication.navigate("#friendsView");
+                },
+                createMeetup: function () {
+                    var tempMeetupModel = addMeetupModel;
+                    delete tempMeetupModel.locations;
+
+                    alert(window.current.applicationUser.userId);
+                    window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
+                    console.log(JSON.stringify(window.current.currentMeetup));
+                    
+                    // TODO: sabrym use ajax and save to server !
+                    // we will need to handle the error scenario as well 
+                    // need to save the friends that have been added as well
+                    // TODO: use one request or two for this purpose??
+                    // issue #1
+                },
+                imageSrc: null,
+
+                // the locations needs to be taken from 4square 
+                // as referenced by issue #5 in git
+                locations: [
+                    { name: "Mishi Kobe Niku", url: "../../content/web/foods/9.jpg" },
+                    { name: "Chef Anton's Cajun Seasoning", url: "../../content/web/foods/4.jpg" },
+                    { name: "Queso Manchego La Pastora", url: "../../content/web/foods/12.jpg" },
+                ],
+                   reset: function() {
+                        this.set("meetupId", kendo.guid());
+                        this.set("meetupTime", "");
+                        this.set("meetupName", "");
+                        this.set("meetupDate", ""); 
+                        this.set("imageSrc", "");                    
+                    }
+            });
+            addMeetupModel.imageSrc = addMeetupModel.locations[0].url;
+            
+            function initForm() {
+                window.current.initializeMeetup();
+                console.log("Init form");
+            }
+
+            var landingModel = kendo.observable({
+                navigateToSelected: function (e) {
+                    var param = $(e.target).data('parameter');
+                    if (param === "login") 
+                    {           
+                        alert("Log me in");               
+                        window.current.loginUser(function(){ 
+                            window.kendoMobileApplication.navigate("#listview-home");}, function() { animate() }, queryFriends);
+                    }
+                    else if (param === "help") 
+                    {
+                        alert("Login Status : " + current.getLoginStatus());
+                    }
+
+                }
+            });
+
+            function alertMe() {
+            resetFriendsListView();
+            window.kendoMobileApplication.navigate("#forms");
+        }
+
+        function resetFriendsListView () {
+             $('li').each(function(index) {
+                $(this).removeClass("listview-selected");
+            });
+
+            window.current.applicationUser.resetFriendsList();
+            addMeetupModel.reset();
+        }
+
+        function queryMeetups (userId) {
+            // query the users meetups.. all being existing, 
+        }
+     var listView;
+        function queryFriends(tokenUrl) {
+            hideLoader();
+            $("#flat-listview").kendoMobileListView(
+            { 
+                dataSource: {
+                    transport: {
+                      read: {
+                        dataType: "jsonp",
+                        url: tokenUrl
+                    }
+                },
+                schema: {
+                    data: "data",
+                },
+                change: function(e) { 
+                    if (e.items !== undefined && window.current.applicationUser.friendsList === undefined) 
+                    {
+                        window.current.listViewLoaded = true;
+                        window.current.applicationUser.setMyFriends(e.items);
+                    }
                 }
             },
-            schema: {
-                data: "data",
+            selectable: "single",
+            template: $("#friendsTemplate").html(),
+            filterable: {
+                field: "name",
+                operator: "startswith"
             },
-            change: function(e) { 
-                if (e.items !== undefined && window.current.applicationUser.friendsList === undefined) 
-                {
-                    window.current.listViewLoaded = true;
-                    window.current.applicationUser.setMyFriends(e.items);
-                }
-            }
-        },
-        selectable: "single",
-        template: $("#friendsTemplate").html()
-    });
-    }
+        });
+        }
 
-    // loading stuff
-    var showButton, interval, loaderElement;
-    function viewInit(e) {
-        showButton = $("#show").bind(kendo.support.mouseup, function() {
+        // loading stuff
+        var showButton, interval, loaderElement;
+        function viewInit(e) {
+            showButton = $("#show").bind(kendo.support.mouseup, function() {
+                currentDiv.animate({ opacity: 0 });
+                startLoading();
+            });
+
+            loaderElement = kendoMobileApplication.pane.loader.element.find("h1");
+        }
+
+        function animate () {
+            var currentDiv = $("#loginView");
             currentDiv.animate({ opacity: 0 });
             startLoading();
-        });
+        }
 
-        loaderElement = kendoMobileApplication.pane.loader.element.find("h1");
-    }
+        function hideLoader() {
+            clearInterval(interval);
+            kendoMobileApplication.hideLoading(); //hide loading popup
+            loaderElement.removeClass("loaderHeading").text("Loading...");
+        }
 
-    function animate () {
+        function viewHide(e) {
+         var currentDiv = $("#loginView");
+         currentDiv.animate({ opacity: 1 });
+         hideLoader();
+     }
+
+     function startLoading() {
         var currentDiv = $("#loginView");
-        currentDiv.animate({ opacity: 0 });
-        startLoading();
-    }
+        hideLoader();
+        var seconds = 5;
 
-    function hideLoader() {
-        clearInterval(interval);
-        kendoMobileApplication.hideLoading(); //hide loading popup
-        loaderElement.removeClass("loaderHeading").text("Loading...");
-    }
+        loaderElement.text(seconds + " seconds left!").addClass("loaderHeading");
 
-    function viewHide(e) {
-     var currentDiv = $("#loginView");
-     currentDiv.animate({ opacity: 1 });
-     hideLoader();
- }
+            kendoMobileApplication.showLoading(); //show loading popup
 
- function startLoading() {
-    var currentDiv = $("#loginView");
-    hideLoader();
-    var seconds = 5;
+            interval = setInterval(function() {
+                loaderElement.text(--seconds + " seconds left!"); //update text of the loading popup
 
-    loaderElement.text(seconds + " seconds left!").addClass("loaderHeading");
+                if (seconds == 0) {
+                    currentDiv.animate({ opacity: 1 });
+                    hideLoader();
+                }
+            }, 1000);
+        }
 
-        kendoMobileApplication.showLoading(); //show loading popup
-
-        interval = setInterval(function() {
-            loaderElement.text(--seconds + " seconds left!"); //update text of the loading popup
-
-            if (seconds == 0) {
-                currentDiv.animate({ opacity: 1 });
-                hideLoader();
-            }
-        }, 1000);
-    }
-
-    function addFriendsToMeetup () {
-        // body...
-        window.kendoMobileApplication.navigate("#friendsView");
-    }
-    </script>
+        function addFriendsToMeetup () {
+            // body...
+            window.kendoMobileApplication.navigate("#friendsView");
+        }
+        </script>
 
 
-    <script>
-    window.kendoMobileApplication = new kendo.mobile.Application(document.body, {
-        transition: "slide",
-        initial: "loginView"
-    } );
-    </script>
-</body>
-</html>
+        <script>
+        window.kendoMobileApplication = new kendo.mobile.Application(document.body, {
+            transition: "slide",
+            initial: "loginView"
+        } );
+        </script>
+    </body>
+    </html>

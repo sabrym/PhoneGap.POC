@@ -39,6 +39,16 @@ var ApplicationUser = (function (Context) {
 		alert("In here" + this.friendsList.length);
 	}
 
+	ApplicationUser.prototype.getFriendBasedOnName = function(friendName) {
+		var trimmedString = friendName.trim();
+		for (var i = 0; i < this.friendsList.length; i++) {
+			if (this.friendsList[i].name == trimmedString) 
+			{
+				return i;				
+			}
+		}
+	}
+
 	return ApplicationUser;
 
 })();
