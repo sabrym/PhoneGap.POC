@@ -177,6 +177,7 @@
                     window.kendoMobileApplication.navigate("#friendsView");
                 },
                 createMeetup: function () {
+                    alert("This is the get for the meetupLocation" + this.imageSrc);
                     var tempMeetupModel = addMeetupModel;
                     delete tempMeetupModel.locations;
                     window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
