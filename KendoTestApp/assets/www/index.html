@@ -74,7 +74,7 @@
                 </li>
                  <li>
                     Meetup Location
-                    <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: locations, value: imageSrc" ></select></label>
+                    <label>src:<select data-text-field="name" data-value-field="url" data-bind="source: locations, value: imageSrc" id="meetupLocation"></select></label>
                 </li>
                 <li>
                     <label>
@@ -138,9 +138,14 @@
     <!-- Application Views End -->
 
     <script id="friendsTemplate" type="text/x-kendo-template">
-    <div><img src= #=picture.data.url# alt="#: data.name #" />#: name #</div>
+        <div>#: name #</div>
     </script>
             <script>
+//                 # var a = data.name #
+// #if(a !="foo"){#
+// <li>#: a # stalingrad</li>
+// #}#
+            // <img src= #=picture.data.url# alt="#: data.name #" />
        function onBackButtonPressed () {
                     // sabrym : we can use the navigator object to go back in history else if we do not want to 
                     // see fit that the application needs to be closed then can call   navigator.app.exitApp();
@@ -149,7 +154,6 @@
 
             // TODO: incorporate in separate JS file
             function onClick(e) {
-                alert(e.item[0].innerText);
                 var index = $(e.item).index();           
                 e.item.toggleClass("listview-selected");
                 var index = window.current.applicationUser.getFriendBasedOnName(e.item[0].innerText);
@@ -168,14 +172,13 @@
                 meetupName: "",
                 meetupDate: "",
                 meetupFriends:"",
+                meetupLocation:"",
                 addFriendsToMeetup: function () {
                     window.kendoMobileApplication.navigate("#friendsView");
                 },
                 createMeetup: function () {
                     var tempMeetupModel = addMeetupModel;
                     delete tempMeetupModel.locations;
-
-                    alert(window.current.applicationUser.userId);
                     window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
                     console.log(JSON.stringify(window.current.currentMeetup));
                     
@@ -199,7 +202,8 @@
                         this.set("meetupTime", "");
                         this.set("meetupName", "");
                         this.set("meetupDate", ""); 
-                        this.set("imageSrc", "");                    
+                        this.set("imageSrc", "");   
+                        this.set("meetupLocation", "");                 
                     }
             });
             addMeetupModel.imageSrc = addMeetupModel.locations[0].url;
@@ -213,8 +217,7 @@
                 navigateToSelected: function (e) {
                     var param = $(e.target).data('parameter');
                     if (param === "login") 
-                    {           
-                        alert("Log me in");               
+                    {                     
                         window.current.loginUser(function(){ hideLoader();
                             window.kendoMobileApplication.navigate("#listview-home");}, function() { animate() }, queryFriends);
                     }

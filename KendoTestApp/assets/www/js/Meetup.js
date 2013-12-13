@@ -13,7 +13,7 @@ var Meetup = (function (Context) {
 
 	Meetup.prototype.setMeetup = function(kendoModel, facebookFriends, creator)
 	{
-		console.log("Meetup friends length" + facebookFriends);
+		console.log("Meetup friends length" + kendoModel.meetupLocation);
 		this.meetupName = kendoModel.meetupName;
 		this.meetupDate = kendoModel.meetupDate; 
 		this.meetupTime = kendoModel.meetupTime;
@@ -21,6 +21,7 @@ var Meetup = (function (Context) {
 		this.meetupAttendees = getSelectedFriends(facebookFriends);
 		this.meetupCreator = creator;
 		this.meetupStatus = MeetupStatus.Pending; 
+		this.meetupLocation = kendoModel.meetupLocation;
 	}
 
 	function getSelectedFriends (facebookFriends) {
