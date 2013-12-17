@@ -177,8 +177,10 @@
                     window.kendoMobileApplication.navigate("#friendsView");
                 },
                 createMeetup: function () {
-                    alert("This is the get for the meetupLocation" + this.imageSrc);
-                    var tempMeetupModel = addMeetupModel;
+
+
+
+
                     delete tempMeetupModel.locations;
                     window.current.currentMeetup.setMeetup(tempMeetupModel, window.current.applicationUser.friendsList, window.current.applicationUser.userId);
                     console.log(JSON.stringify(window.current.currentMeetup));
@@ -224,7 +226,25 @@
                     }
                     else if (param === "help") 
                     {
-                        alert("Login Status : " + current.getLoginStatus());
+                         var url = 'http://172.20.8.117:8050/Service/GetDepartment';  
+   
+                           $.ajax({  
+                             type: 'GET',  
+                             url: url,  
+                             contentType: "application/json",  
+                             dataType: 'json',  
+                             crossDomain: true,  
+                             success: function(res) {  
+                               alert("Successful" + res);  
+                               console.log(res);  
+                             },  
+                             error: function(e) {  
+                               console.log(e);  
+                             },  
+                             complete: function(data) {  
+                              // console.log(e.message);  
+                             }  
+                           });  
                     }
 
                 }
