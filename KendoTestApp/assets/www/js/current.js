@@ -31,7 +31,7 @@
 
             this.fb.Event.subscribe('auth.statusChange', function(response) {
               currentClass.loginStatus = response.status;
-              alert("Status Change!");
+              //alert("Status Change!");
             });
           };
 

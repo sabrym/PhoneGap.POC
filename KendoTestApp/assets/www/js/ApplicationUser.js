@@ -36,7 +36,7 @@ var ApplicationUser = (function (Context) {
 			}
 		}
 
-		alert("In here" + this.friendsList.length);
+		// alert("In here" + this.friendsList.length);
 	}
 
 	ApplicationUser.prototype.getFriendBasedOnName = function(friendName) {
