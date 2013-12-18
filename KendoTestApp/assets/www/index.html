@@ -226,23 +226,25 @@
                     }
                     else if (param === "help") 
                     {
-                         var url = 'http://172.20.8.117:8050/Service/GetDepartment';  
+                         var url = 'http://172.20.8.137:8050/Service/GetDepartment';  
    
                            $.ajax({  
                              type: 'GET',  
                              url: url,  
-                             contentType: "application/json",  
+                             contentType: "text/json",  
                              dataType: 'json',  
                              crossDomain: true,  
                              success: function(res) {  
-                               alert("Successful" + res);  
-                               console.log(res);  
+                               var foo = JSON.parse(res);
+                               alert(foo.meetupName);  
                              },  
                              error: function(e) {  
                                console.log(e);  
                              },  
                              complete: function(data) {  
-                              // console.log(e.message);  
+                              // TODO: Move into another view or whichever, 
+                              // required in the complete function 
+                              alert("Within the complete");
                              }  
                            });  
                     }
